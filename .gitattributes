@@ -1,0 +1,6 @@
+# Normaliza finais de linha. Arquivos executados em Linux (CI e containers) ficam sempre com LF.
+* text=auto
+*.sql text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+Dockerfile text eol=lf

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Café Artesanal | Cafés especiais com entrega</title>
+  <meta name="description" content="Cafés especiais, torra artesanal e pedidos online com entrega ou retirada.">
+  <meta name="theme-color" content="#4B2E2B">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/tema-inicial.js"></script>
+  <script type="module" src="js/paginas/inicio.js"></script>
+</head>
+<body>
+  <main id="conteudo" tabindex="-1">
+    <section class="hero" aria-labelledby="titulo-hero">
+      <div class="container">
+        <h1 id="titulo-hero">O melhor café da cidade</h1>
+        <p>Grãos selecionados e torrados artesanalmente. Peça pelo site ou pelo app e receba em casa ou retire no balcão.</p>
+        <div class="linha" style="justify-content:center">
+          <a class="botao botao-primario botao-grande" href="cardapio.html">Ver cardápio</a>
+          <a class="botao botao-grande" href="#inclusao" style="background:transparent;color:#FFF8F0">Nosso compromisso</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="titulo-destaques">
+      <div class="container">
+        <header class="cabecalho-secao">
+          <span class="etiqueta">Destaques</span>
+          <h2 id="titulo-destaques">Os favoritos da casa</h2>
+          <p class="texto-suave">Seleção especial preparada pelos nossos baristas.</p>
+        </header>
+        <div class="grade-produtos" id="destaques" aria-live="polite">
+          <div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div>
+        </div>
+        <p class="texto-centro mt-3"><a class="botao" href="cardapio.html">Ver todos os produtos</a></p>
+      </div>
+    </section>
+
+    <section class="secao secao-alt" aria-labelledby="titulo-como">
+      <div class="container">
+        <header class="cabecalho-secao">
+          <span class="etiqueta">Simples assim</span>
+          <h2 id="titulo-como">Como pedir</h2>
+        </header>
+        <ol class="grade-3" style="list-style:none;padding:0;margin:0">
+          <li class="cartao passo">
+            <div class="icone-grande" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+            <h3>1. Escolha</h3>
+            <p class="texto-suave mb-0">Navegue pelo cardápio no site ou no app e monte seu pedido.</p>
+          </li>
+          <li class="cartao passo">
+            <div class="icone-grande" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+            <h3>2. Entrega ou retirada</h3>
+            <p class="texto-suave mb-0">Receba no seu endereço ou retire no balcão sem pagar taxa.</p>
+          </li>
+          <li class="cartao passo">
+            <div class="icone-grande" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+            <h3>3. Acompanhe</h3>
+            <p class="texto-suave mb-0">Veja cada etapa do pedido em tempo real, do preparo até a entrega.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="titulo-sobre">
+      <div class="container grade-2" style="align-items:center">
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=70" alt="Barista preparando café em uma cafeteria aconchegante" loading="lazy" style="border-radius:var(--raio-g);aspect-ratio:4/3;object-fit:cover">
+        <div>
+          <span class="etiqueta">Nossa história</span>
+          <h2 id="titulo-sobre">Paixão por café de qualidade</h2>
+          <p>Nascemos em 2020 com a missão de conectar pessoas através do café. Cada grão é selecionado de pequenos produtores e torrado artesanalmente para garantir o melhor sabor e aroma.</p>
+          <p>Com a transformação digital, levamos a mesma experiência do balcão para o site e para o aplicativo — com pedidos rápidos, acompanhamento em tempo real e atendimento acessível.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao secao-alt" id="inclusao" aria-labelledby="titulo-inclusao">
+      <div class="container">
+        <header class="cabecalho-secao">
+          <span class="etiqueta">Responsabilidade social</span>
+          <h2 id="titulo-inclusao">Um café para todas as pessoas</h2>
+          <p class="texto-suave">Acreditamos que tecnologia deve incluir. Por isso, o sistema foi pensado para respeitar a diversidade e ser usado por qualquer pessoa.</p>
+        </header>
+        <div class="recursos-inclusao" id="recursos-inclusao"></div>
+        <p class="texto-centro mt-3"><a href="acessibilidade.html">Conheça todos os recursos de acessibilidade</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minha conta | Café Artesanal</title>
+  <meta name="theme-color" content="#4B2E2B">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/tema-inicial.js"></script>
+  <script type="module" src="js/paginas/conta.js"></script>
+</head>
+<body>
+  <main id="conteudo" tabindex="-1">
+    <div class="container">
+      <header class="cabecalho-pagina">
+        <h1>Minha conta</h1>
+        <p id="saudacao">Gerencie seus dados, endereços e preferências.</p>
+      </header>
+
+      <div class="grade-2">
+        <section class="cartao" aria-labelledby="titulo-dados">
+          <h2 id="titulo-dados">Dados pessoais</h2>
+          <form id="form-perfil" novalidate>
+            <div class="campo">
+              <label for="perfil-nome">Nome completo</label>
+              <input id="perfil-nome" name="nome" autocomplete="name" maxlength="100" required>
+            </div>
+            <div class="campo">
+              <label for="perfil-nome-social">Nome social <span class="opcional">(opcional)</span></label>
+              <input id="perfil-nome-social" name="nomeSocial" maxlength="100" aria-describedby="ajuda-social">
+              <span id="ajuda-social" class="ajuda">Quando preenchido, é o nome usado no site, no app e pela equipe.</span>
+            </div>
+            <div class="campo">
+              <label for="perfil-cpf">CPF</label>
+              <input id="perfil-cpf" readonly aria-describedby="ajuda-cpf">
+              <span id="ajuda-cpf" class="ajuda">O CPF não pode ser alterado.</span>
+            </div>
+            <div class="grade-campos">
+              <div class="campo">
+                <label for="perfil-email">E-mail <span class="opcional">(opcional)</span></label>
+                <input id="perfil-email" name="email" type="email" autocomplete="email" maxlength="150">
+              </div>
+              <div class="campo">
+                <label for="perfil-telefone">Celular <span class="opcional">(opcional)</span></label>
+                <input id="perfil-telefone" name="telefone" type="tel" autocomplete="tel">
+              </div>
+            </div>
+            <button type="submit" class="botao botao-primario">Salvar dados</button>
+          </form>
+        </section>
+
+        <div class="pilha">
+          <section class="cartao" aria-labelledby="titulo-enderecos">
+            <div class="linha-entre">
+              <h2 id="titulo-enderecos" class="mb-0">Endereços</h2>
+              <button type="button" class="botao botao-pequeno" id="novo-endereco">Adicionar</button>
+            </div>
+            <div id="enderecos" class="mt-2"></div>
+          </section>
+
+          <section class="cartao" aria-labelledby="titulo-senha">
+            <h2 id="titulo-senha">Alterar senha</h2>
+            <form id="form-senha" novalidate>
+              <div class="campo">
+                <label for="senha-atual">Senha atual</label>
+                <input id="senha-atual" name="senhaAtual" type="password" autocomplete="current-password" required>
+              </div>
+              <div class="campo">
+                <label for="nova-senha">Nova senha</label>
+                <input id="nova-senha" name="novaSenha" type="password" autocomplete="new-password" required aria-describedby="ajuda-nova-senha">
+                <span id="ajuda-nova-senha" class="ajuda">Mínimo de 8 caracteres, com letras e números. As outras sessões serão encerradas.</span>
+              </div>
+              <button type="submit" class="botao">Alterar senha</button>
+            </form>
+          </section>
+
+          <section class="cartao" aria-labelledby="titulo-preferencias">
+            <h2 id="titulo-preferencias">Preferências de acessibilidade</h2>
+            <p class="texto-suave">Ficam salvas neste navegador e valem para todas as páginas.</p>
+            <div class="linha" id="preferencias"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cardápio | Café Artesanal</title>
+  <meta name="description" content="Cardápio completo: cafés, bebidas, acompanhamentos e grãos.">
+  <meta name="theme-color" content="#4B2E2B">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/tema-inicial.js"></script>
+  <script type="module" src="js/paginas/cardapio.js"></script>
+</head>
+<body>
+  <main id="conteudo" tabindex="-1">
+    <div class="container">
+      <header class="cabecalho-pagina">
+        <h1>Cardápio</h1>
+        <p>Escolha seus favoritos. Os preços e a disponibilidade são atualizados em tempo real.</p>
+      </header>
+
+      <section class="filtros" aria-label="Filtros do cardápio">
+        <div class="linha-busca">
+          <div class="campo mb-0">
+            <label for="busca">Buscar produto</label>
+            <input id="busca" type="search" placeholder="Ex.: cappuccino, pão de queijo..." autocomplete="off">
+          </div>
+          <div class="campo mb-0">
+            <label for="ordenar">Ordenar por</label>
+            <select id="ordenar">
+              <option value="">Categoria</option>
+              <option value="nome">Nome (A-Z)</option>
+              <option value="preco_asc">Menor preço</option>
+              <option value="preco_desc">Maior preço</option>
+            </select>
+          </div>
+        </div>
+        <div class="chips" id="categorias" role="group" aria-label="Categorias"></div>
+      </section>
+
+      <p id="resumo-resultados" class="texto-suave" aria-live="polite"></p>
+      <div class="grade-produtos" id="produtos">
+        <div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

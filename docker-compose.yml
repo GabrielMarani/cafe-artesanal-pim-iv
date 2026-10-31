@@ -1,0 +1,45 @@
+# Sobe o ambiente completo: banco MariaDB (com o script do projeto) + API/Web.
+#   docker compose up -d --build
+#   Web:     http://localhost:5000
+#   Swagger: http://localhost:5000/swagger
+#   Saúde:   http://localhost:5000/health
+#
+# Segredos vêm do arquivo .env (copie de .env.exemplo).
+
+services:
+  banco:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_SENHA:?defina DB_ROOT_SENHA no .env}
+      MARIADB_USER: cafe_app
+      MARIADB_PASSWORD: ${DB_APP_SENHA:?defina DB_APP_SENHA no .env}
+      MARIADB_DATABASE: bd_cafe_artesanal
+      TZ: America/Sao_Paulo
+    command: ["--default-time-zone=-03:00", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - dados-banco:/var/lib/mysql
+      # Executado só na primeira subida (volume vazio)
+      - ./database/bd_cafe_artesanal.sql:/docker-entrypoint-initdb.d/01_bd_cafe_artesanal.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      banco:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__CafeArtesanal: "Server=banco;Port=3306;Database=bd_cafe_artesanal;User=cafe_app;Password=${DB_APP_SENHA};CharSet=utf8mb4;"
+      Banco__VersaoServidor: "10.11.0-mariadb"
+      Jwt__Chave: ${JWT_CHAVE:?defina JWT_CHAVE no .env (mínimo 32 caracteres)}
+      Cors__Origens__0: "http://localhost:8081"
+    ports:
+      - "5000:8080"
+
+volumes:
+  dados-banco:

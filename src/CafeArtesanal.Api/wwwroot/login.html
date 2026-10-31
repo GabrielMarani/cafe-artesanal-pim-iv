@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar | Café Artesanal</title>
+  <meta name="theme-color" content="#4B2E2B">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/tema-inicial.js"></script>
+  <script type="module" src="js/paginas/login.js"></script>
+</head>
+<body>
+  <main id="conteudo" tabindex="-1" class="pagina-login">
+    <aside class="login-lateral">
+      <a href="index.html">← Voltar para a loja</a>
+      <h1>O melhor café da cidade, a um clique.</h1>
+      <p>Peça pelo site ou pelo app, escolha entrega ou retirada e acompanhe tudo em tempo real.</p>
+      <div class="extra">
+        <h2 style="font-size:1.05rem">Um cadastro que respeita você</h2>
+        <ul>
+          <li>Informe seu <strong>nome social</strong>: é ele que vamos usar para falar com você.</li>
+          <li>Seus dados são usados somente para processar seus pedidos (LGPD).</li>
+          <li>Senha protegida com criptografia (PBKDF2).</li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="login-formulario">
+      <div class="login-caixa">
+        <div class="abas" role="tablist" aria-label="Acesso">
+          <button type="button" role="tab" id="aba-entrar" aria-controls="painel-entrar" aria-selected="true">Entrar</button>
+          <button type="button" role="tab" id="aba-cadastro" aria-controls="painel-cadastro" aria-selected="false" tabindex="-1">Criar conta</button>
+        </div>
+
+        <section id="painel-entrar" role="tabpanel" aria-labelledby="aba-entrar">
+          <h2>Bem-vindo(a) de volta</h2>
+          <form id="form-entrar" novalidate>
+            <div class="campo">
+              <label for="login">CPF ou e-mail</label>
+              <input id="login" name="login" autocomplete="username" required>
+            </div>
+            <div class="campo">
+              <label for="senha-login">Senha</label>
+              <div class="campo-senha">
+                <input id="senha-login" name="senha" type="password" autocomplete="current-password" required>
+                <button type="button" class="botao botao-texto botao-icone" data-mostrar-senha="senha-login" aria-label="Mostrar senha" aria-pressed="false"></button>
+              </div>
+            </div>
+            <button type="submit" class="botao botao-primario botao-grande botao-bloco">Entrar</button>
+          </form>
+          <p class="texto-centro mt-2">Não tem conta? <button type="button" class="botao botao-texto" data-ir-para="cadastro">Cadastre-se grátis</button></p>
+        </section>
+
+        <section id="painel-cadastro" role="tabpanel" aria-labelledby="aba-cadastro" hidden>
+          <h2>Crie sua conta</h2>
+          <form id="form-cadastro" novalidate>
+            <div class="campo">
+              <label for="nome">Nome completo</label>
+              <input id="nome" name="nome" autocomplete="name" maxlength="100" required>
+            </div>
+            <div class="campo">
+              <label for="nome-social">Nome social <span class="opcional">(opcional)</span></label>
+              <input id="nome-social" name="nomeSocial" maxlength="100" aria-describedby="ajuda-nome-social">
+              <span id="ajuda-nome-social" class="ajuda">Como você gostaria de ser chamado(a)? Se preencher, usaremos este nome em todo o atendimento.</span>
+            </div>
+            <div class="grade-campos">
+              <div class="campo">
+                <label for="cpf">CPF</label>
+                <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" required aria-describedby="erro-cpf">
+                <span id="erro-cpf" class="erro-campo" aria-live="polite"></span>
+              </div>
+              <div class="campo">
+                <label for="telefone">Celular <span class="opcional">(opcional)</span></label>
+                <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel">
+              </div>
+            </div>
+            <div class="campo">
+              <label for="email">E-mail <span class="opcional">(opcional)</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" maxlength="150" aria-describedby="ajuda-email">
+              <span id="ajuda-email" class="ajuda">Com e-mail você também pode entrar usando ele no lugar do CPF.</span>
+            </div>
+            <div class="campo">
+              <label for="senha-cadastro">Senha</label>
+              <div class="campo-senha">
+                <input id="senha-cadastro" name="senha" type="password" autocomplete="new-password" required aria-describedby="requisitos-senha">
+                <button type="button" class="botao botao-texto botao-icone" data-mostrar-senha="senha-cadastro" aria-label="Mostrar senha" aria-pressed="false"></button>
+              </div>
+              <ul class="requisitos" id="requisitos-senha">
+                <li data-regra="tamanho">Pelo menos 8 caracteres</li>
+                <li data-regra="letra">Pelo menos uma letra</li>
+                <li data-regra="numero">Pelo menos um número</li>
+              </ul>
+            </div>
+            <div class="campo">
+              <label for="confirmar-senha">Confirmar senha</label>
+              <input id="confirmar-senha" name="confirmar" type="password" autocomplete="new-password" required>
+            </div>
+            <button type="submit" class="botao botao-primario botao-grande botao-bloco">Criar minha conta</button>
+          </form>
+          <p class="texto-centro mt-2">Já tem conta? <button type="button" class="botao botao-texto" data-ir-para="entrar">Entrar</button></p>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

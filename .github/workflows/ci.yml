@@ -1,0 +1,92 @@
+# Pipeline CI/CD do Café Artesanal
+#  - backend: compila e roda os testes automatizados (.NET 8)
+#  - banco:   executa o script SQL completo num MariaDB real e chama as procedures
+#  - mobile:  instala dependências e faz a checagem de tipos do app (TypeScript)
+#  - imagem:  gera a imagem Docker; na branch main publica no GitHub Container Registry (CD)
+
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet restore CafeArtesanal.sln
+      - run: dotnet build CafeArtesanal.sln -c Release --no-restore
+      - run: dotnet test tests/CafeArtesanal.Tests -c Release --no-build --logger "trx;LogFileName=resultados.trx"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultados-testes
+          path: tests/**/TestResults/*.trx
+
+  banco:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: ci
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y mariadb-client
+      - name: Executa o script completo do banco
+        run: mariadb -h 127.0.0.1 -uroot -pci < database/bd_cafe_artesanal.sql
+      - name: Verifica procedures, triggers e views
+        run: |
+          mariadb -h 127.0.0.1 -uroot -pci bd_cafe_artesanal -e "
+            CALL sp_dashboard_resumo(CURDATE() - INTERVAL 30 DAY, CURDATE());
+            CALL sp_produtos_mais_vendidos(CURDATE() - INTERVAL 30 DAY, CURDATE(), 3);
+            SELECT COUNT(*) AS triggers FROM information_schema.TRIGGERS WHERE TRIGGER_SCHEMA = 'bd_cafe_artesanal';
+            SELECT * FROM vw_produtos_estoque_baixo;"
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx expo-doctor
+
+  imagem:
+    needs: [backend, banco]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Nome da imagem em minúsculas (exigência do registry)
+        run: echo "IMAGEM=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/cafe-artesanal-api" >> "$GITHUB_ENV"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ env.IMAGEM }}:latest,${{ env.IMAGEM }}:${{ github.sha }}

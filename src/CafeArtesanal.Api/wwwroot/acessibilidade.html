@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acessibilidade e inclusão | Café Artesanal</title>
+  <meta name="theme-color" content="#4B2E2B">
+  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/tema-inicial.js"></script>
+  <script type="module">
+    import { montarLayout } from './js/nucleo/layout.js';
+    montarLayout();
+  </script>
+</head>
+<body>
+  <main id="conteudo" tabindex="-1">
+    <div class="container" style="max-width:860px">
+      <header class="cabecalho-pagina">
+        <h1>Acessibilidade e inclusão</h1>
+        <p>Nosso compromisso é que qualquer pessoa consiga fazer um pedido com autonomia, respeito e segurança.</p>
+      </header>
+
+      <section class="cartao mt-2" aria-labelledby="t-recursos">
+        <h2 id="t-recursos">Recursos disponíveis no site</h2>
+        <ul>
+          <li><strong>VLibras:</strong> clique no ícone de mãos no canto da tela para traduzir o conteúdo para a Língua Brasileira de Sinais (ferramenta oficial do Governo Federal).</li>
+          <li><strong>Alto contraste e tema escuro:</strong> na barra superior. As cores seguem o contraste mínimo do WCAG 2.1 nível AA.</li>
+          <li><strong>Tamanho da fonte:</strong> botões A−, A e A+ na barra superior. Todo o layout se adapta ao novo tamanho.</li>
+          <li><strong>Teclado:</strong> todas as funções podem ser usadas com Tab, Enter, Espaço e setas. O foco fica sempre visível.</li>
+          <li><strong>Leitores de tela:</strong> páginas com títulos hierárquicos, regiões nomeadas, textos alternativos e avisos falados, estrutura pensada para leitores como NVDA e TalkBack.</li>
+          <li><strong>Movimento reduzido:</strong> se o seu sistema pede menos animações, o site desliga as animações automaticamente.</li>
+          <li><strong>Aplicativo:</strong> o app respeita o tamanho de fonte do celular e tem rótulos para o TalkBack/VoiceOver.</li>
+        </ul>
+      </section>
+
+      <section class="cartao mt-2" aria-labelledby="t-atalhos">
+        <h2 id="t-atalhos">Atalhos de teclado</h2>
+        <div class="tabela-rolagem">
+          <table class="tabela">
+            <caption class="sr-only">Atalhos de teclado do site</caption>
+            <thead><tr><th scope="col">Atalho</th><th scope="col">Ação</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>Alt</kbd> + <kbd>1</kbd></td><td>Ir para o conteúdo principal</td></tr>
+              <tr><td><kbd>Alt</kbd> + <kbd>2</kbd></td><td>Ir para o menu</td></tr>
+              <tr><td><kbd>Alt</kbd> + <kbd>3</kbd></td><td>Ir para o rodapé</td></tr>
+              <tr><td><kbd>Esc</kbd></td><td>Fechar janelas e o menu do celular</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="cartao mt-2" aria-labelledby="t-diversidade">
+        <h2 id="t-diversidade">Diversidade e combate à discriminação</h2>
+        <ul>
+          <li><strong>Nome social:</strong> pessoas trans e não binárias podem informar o nome pelo qual querem ser chamadas. Ele aparece no site, no app, nos pedidos e para a equipe — o nome de registro fica apenas no cadastro.</li>
+          <li><strong>Coleta mínima de dados:</strong> não perguntamos gênero, raça, cor, religião ou origem. Pedimos só o necessário para entregar o pedido (LGPD).</li>
+          <li><strong>Linguagem inclusiva:</strong> textos escritos de forma simples e sem expressões discriminatórias.</li>
+          <li><strong>Atendimento igual:</strong> as regras de preço, entrega e prioridade são as mesmas para todas as pessoas e ficam registradas no sistema (auditoria de status e de preços).</li>
+          <li><strong>Cidadania digital:</strong> a loja aceita pagamento em dinheiro e retirada no balcão, para quem não tem cartão ou conta bancária.</li>
+        </ul>
+      </section>
+
+      <section class="cartao mt-2" aria-labelledby="t-contato">
+        <h2 id="t-contato">Encontrou alguma barreira?</h2>
+        <p class="mb-0">Fale com a gente pelo telefone (11) 98765-4321. Toda sugestão de acessibilidade é analisada pela equipe.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

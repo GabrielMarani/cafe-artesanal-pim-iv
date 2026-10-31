@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Imagem indisponível">
+  <rect width="400" height="300" fill="#F5E6D3"/>
+  <g transform="translate(150 95)" fill="none" stroke="#8A5426" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M78 40h8a24 24 0 0 1 0 48h-8"/>
+    <path d="M6 40h72v54a24 24 0 0 1-24 24H30A24 24 0 0 1 6 94V40z"/>
+    <line x1="30" y1="6" x2="30" y2="20"/><line x1="48" y1="6" x2="48" y2="20"/><line x1="66" y1="6" x2="66" y2="20"/>
+  </g>
+</svg>
