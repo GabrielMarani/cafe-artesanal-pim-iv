@@ -1,7 +1,7 @@
 # Pipeline CI/CD do Café Artesanal
 #  - backend: compila e roda os testes automatizados (.NET 8)
 #  - banco:   executa o script SQL completo num MariaDB real e chama as procedures
-#  - mobile:  instala dependências e faz a checagem de tipos do app (TypeScript)
+#  - mobile:  análise estática, testes e build do APK do app Flutter
 #  - imagem:  gera a imagem Docker; na branch main publica no GitHub Container Registry (CD)
 
 name: CI/CD
@@ -59,14 +59,22 @@ jobs:
         working-directory: mobile
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-java@v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: mobile/package-lock.json
-      - run: npm ci
-      - run: npx tsc --noEmit
-      - run: npx expo-doctor
+          distribution: temurin
+          java-version: 17
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build apk --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk-debug
+          path: mobile/build/app/outputs/flutter-apk/app-debug.apk
 
   imagem:
     needs: [backend, banco]

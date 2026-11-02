@@ -50,7 +50,11 @@ class _ShellState extends State<Shell> {
               label: Text('$quantidade'),
               child: const Icon(Icons.shopping_cart_outlined),
             ),
-            selectedIcon: const Icon(Icons.shopping_cart),
+            selectedIcon: Badge(
+              isLabelVisible: quantidade > 0,
+              label: Text('$quantidade'),
+              child: const Icon(Icons.shopping_cart),
+            ),
             label: 'Carrinho',
             tooltip: 'Carrinho, $quantidade itens',
           ),

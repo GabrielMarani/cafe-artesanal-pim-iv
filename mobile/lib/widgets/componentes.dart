@@ -221,7 +221,11 @@ Future<bool> confirmar(BuildContext context,
       actions: [
         TextButton(onPressed: () => Navigator.pop(contexto, false), child: const Text('Voltar')),
         FilledButton(
-          style: destrutivo ? FilledButton.styleFrom(backgroundColor: Theme.of(contexto).colorScheme.error) : null,
+          // O tema usa botões de largura total; no diálogo eles ficam lado a lado.
+          style: FilledButton.styleFrom(
+            minimumSize: const Size(0, 48),
+            backgroundColor: destrutivo ? Theme.of(contexto).colorScheme.error : null,
+          ),
           onPressed: () => Navigator.pop(contexto, true),
           child: Text(confirmar),
         ),

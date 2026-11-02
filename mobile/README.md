@@ -1,17 +1,13 @@
-# cafe_artesanal
+# Café Artesanal — App mobile (Flutter)
 
-App mobile do Café Artesanal (PIM IV)
+App do cliente: cardápio com modo offline, carrinho, checkout, acompanhamento de pedidos e conta.
+Consome a API REST em `src/CafeArtesanal.Api`. Como rodar: veja o [README principal](../README.md).
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Pasta | Conteúdo |
+|---|---|
+| `lib/api` | Modelos, cliente HTTP (JWT + renovação da sessão) e endpoints |
+| `lib/estado` | Estado com Provider: sessão, carrinho e catálogo (sincronização) |
+| `lib/telas` | Telas do app |
+| `lib/widgets` | Componentes reutilizáveis |
+| `lib/core` | Configuração, tema, formatação e armazenamento local |
+| `test` | Testes de unidade e de widget |

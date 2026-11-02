@@ -18,6 +18,9 @@ class TemaCafe {
         primary: cafe,
         onPrimary: creme,
         secondary: const Color(0xFF556B2F),
+        // Sem isto o Material 3 deriva um tom rosado da cor-semente marrom.
+        secondaryContainer: bege,
+        onSecondaryContainer: cafe,
         tertiary: caramelo,
         surface: Colors.white,
         brightness: Brightness.light,
@@ -28,6 +31,8 @@ class TemaCafe {
         primary: const Color(0xFFD9A57A),
         onPrimary: const Color(0xFF1F1A17),
         secondary: const Color(0xFFA9C47A),
+        secondaryContainer: const Color(0xFF40352F),
+        onSecondaryContainer: bege,
         tertiary: caramelo,
         surface: const Color(0xFF241E1B),
         brightness: Brightness.dark,
@@ -38,6 +43,8 @@ class TemaCafe {
         colorScheme: cores,
         scaffoldBackgroundColor: fundo,
         appBarTheme: AppBarTheme(backgroundColor: cores.surface, foregroundColor: cores.onSurface, centerTitle: false),
+        navigationBarTheme: NavigationBarThemeData(backgroundColor: cores.surface, indicatorColor: cores.secondaryContainer),
+        chipTheme: ChipThemeData(selectedColor: cores.secondaryContainer, backgroundColor: cores.surface),
         cardTheme: CardThemeData(
           color: cores.surface,
           elevation: 0,
