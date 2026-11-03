@@ -69,7 +69,9 @@ export function renovarSessao() {
       const nova = await requisitar('/auth/refresh', { metodo: 'POST', corpo: { refreshToken: tokenUsado }, autenticar: false });
       sessao.salvar(nova);
       return true;
-    } catch {
+    } catch (erro) {
+      // Sem internet a sessão continua valendo: não desconecta a pessoa por causa disso.
+      if (erro.status === 0) throw erro;
       // Outra aba pode ter renovado primeiro: nesse caso o token salvo já é outro.
       return sessao.refreshToken() !== null && sessao.refreshToken() !== tokenUsado;
     } finally {

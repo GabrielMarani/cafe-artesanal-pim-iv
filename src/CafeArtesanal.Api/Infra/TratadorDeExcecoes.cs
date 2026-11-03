@@ -2,6 +2,7 @@ using CafeArtesanal.Application.Comum;
 using CafeArtesanal.Domain.Comum;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
 
 namespace CafeArtesanal.Api.Infra;
 
@@ -23,14 +24,18 @@ public sealed class TratadorDeExcecoes(ILogger<TratadorDeExcecoes> logger, IProb
             AcessoNegadoException => (StatusCodes.Status403Forbidden, "Acesso negado"),
             NaoAutenticadoException => (StatusCodes.Status401Unauthorized, "Não autenticado"),
             OperationCanceledException => (499, "Requisição cancelada"),
+            _ when BancoForaDoAr(excecao) => (StatusCodes.Status503ServiceUnavailable, "Serviço indisponível"),
             _ => (StatusCodes.Status500InternalServerError, "Erro interno")
         };
 
-        var detalhe = status == StatusCodes.Status500InternalServerError
-            ? "Ocorreu um erro inesperado. Tente novamente em instantes."
-            : excecao.Message;
+        var detalhe = status switch
+        {
+            StatusCodes.Status500InternalServerError => "Ocorreu um erro inesperado. Tente novamente em instantes.",
+            StatusCodes.Status503ServiceUnavailable => "O banco de dados está fora do ar. Tente novamente em instantes.",
+            _ => excecao.Message
+        };
 
-        if (status == StatusCodes.Status500InternalServerError)
+        if (status >= StatusCodes.Status500InternalServerError)
             logger.LogError(excecao, "Erro não tratado em {Metodo} {Caminho}", contexto.Request.Method, contexto.Request.Path);
 
         contexto.Response.StatusCode = status;
@@ -40,5 +45,15 @@ public sealed class TratadorDeExcecoes(ILogger<TratadorDeExcecoes> logger, IProb
             Exception = excecao,
             ProblemDetails = new ProblemDetails { Status = status, Title = titulo, Detail = detalhe }
         });
+    }
+
+    private static bool BancoForaDoAr(Exception excecao)
+    {
+        for (var atual = excecao; atual is not null; atual = atual.InnerException)
+        {
+            if (atual is MySqlException { ErrorCode: MySqlErrorCode.UnableToConnectToHost })
+                return true;
+        }
+        return false;
     }
 }

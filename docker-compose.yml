@@ -36,6 +36,7 @@ services:
     environment:
       ConnectionStrings__CafeArtesanal: "Server=banco;Port=3306;Database=bd_cafe_artesanal;User=cafe_app;Password=${DB_APP_SENHA};CharSet=utf8mb4;"
       Banco__VersaoServidor: "10.11.0-mariadb"
+      Swagger__Habilitado: "true"   # desligue em um ambiente público
       Jwt__Chave: ${JWT_CHAVE:?defina JWT_CHAVE no .env (mínimo 32 caracteres)}
       Cors__Origens__0: "http://localhost:8081"
     ports:

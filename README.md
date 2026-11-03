@@ -32,7 +32,8 @@ Continuação do sistema do PIM III, refatorado em camadas.
 | `src/CafeArtesanal.Application` | Serviços de caso de uso, DTOs, validações e portas (interfaces de repositório) |
 | `src/CafeArtesanal.Infrastructure` | `CafeDbContext`, repositórios, chamadas às procedures, hash de senha, JWT, inicializador do banco |
 | `src/CafeArtesanal.Api` | API REST + front-end web em `wwwroot/` |
-| `tests/CafeArtesanal.Tests` | Testes automatizados (xUnit) |
+| `tests/CafeArtesanal.Tests` | Testes de unidade (xUnit), sem banco |
+| `tests/CafeArtesanal.IntegrationTests` | Testes de integração: API de verdade + MariaDB (triggers, procedures, permissões, concorrência) |
 | `mobile/` | App Flutter/Dart: `lib/telas` (telas), `lib/estado` (Provider), `lib/api` (cliente da API) |
 | `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml` | Containers e pipeline CI/CD |
 
@@ -55,7 +56,7 @@ dotnet run
 | Endereço | O que é |
 |---|---|
 | http://localhost:5000 | Site (loja + painel) |
-| http://localhost:5000/swagger | Documentação interativa da API |
+| http://localhost:5000/swagger | Documentação interativa da API (ligada por `Swagger:Habilitado`; desligada por padrão fora do ambiente de desenvolvimento) |
 | http://localhost:5000/health | Saúde da aplicação e do banco |
 
 ### 2. App mobile (Flutter)
@@ -103,13 +104,18 @@ docker compose up -d --build
 ## Testes
 
 ```bash
-dotnet test
+dotnet test tests/CafeArtesanal.Tests
+dotnet test tests/CafeArtesanal.IntegrationTests
 ```
 
-42 testes cobrindo regras do pedido (fluxo de status, cancelamento, estoque, totais), CPF, e-mail,
-hash de senha (inclusive os hashes do script SQL), divisão do script SQL e o serviço de pedidos com repositórios em memória.
+- **Unidade (42 testes, não precisam de banco):** regras do pedido (fluxo de status, cancelamento, estoque, totais), CPF, e-mail,
+  hash de senha (inclusive os hashes do script SQL), divisão do script SQL e o serviço de pedidos com repositórios em memória.
+- **Integração (19 testes, precisam do MariaDB ligado):** sobem a API de verdade em um banco próprio (`bd_cafe_artesanal_teste`),
+  criado a partir do script e apagado no final; o banco de desenvolvimento não é tocado. Cobrem triggers de estoque, procedures,
+  permissões, desativação de conta valendo na hora, rotação de token, conflito de alterações simultâneas e páginas de erro.
+  Para outro servidor, defina a variável `TESTE_DB_CONEXAO`.
 
-No app (`cd mobile`): `flutter analyze` e `flutter test` (11 testes: formatação, modelos, sincronização do catálogo, carrinho e navegação).
+No app (`cd mobile`): `flutter analyze` e `flutter test` (23 testes: formatação, modelos, sincronização do catálogo, carrinho, navegação, erros da API e telas da conta).
 
 ## Principais melhorias em relação ao PIM III
 

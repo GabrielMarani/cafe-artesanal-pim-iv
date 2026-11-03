@@ -26,12 +26,12 @@ const estado = {
 async function iniciar() {
   const [loja, catalogo, enderecos] = await Promise.allSettled([
     api.loja(),
-    api.produtos.pesquisar({ tamanhoPagina: 100 }),
+    api.catalogoCompleto(),
     sessao.estaLogado() ? api.conta.enderecos() : Promise.resolve([])
   ]);
 
   if (loja.status === 'fulfilled') estado.loja = loja.value;
-  if (catalogo.status === 'fulfilled') estado.avisoIndisponiveis = carrinho.conciliar(catalogo.value.itens);
+  if (catalogo.status === 'fulfilled') estado.avisoIndisponiveis = carrinho.conciliar(catalogo.value.produtos);
   if (enderecos.status === 'fulfilled') {
     estado.enderecos = enderecos.value;
     estado.enderecoId = enderecos.value.find((e) => e.principal)?.id ?? enderecos.value[0]?.id ?? null;

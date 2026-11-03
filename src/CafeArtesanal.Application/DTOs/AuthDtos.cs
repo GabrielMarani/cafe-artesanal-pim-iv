@@ -19,10 +19,10 @@ public sealed class RegistrarRequest
     public string Cpf { get; init; } = string.Empty;
 
     [EmailAddress(ErrorMessage = "E-mail inválido.")]
-    [StringLength(150)]
+    [StringLength(150, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Email { get; init; }
 
-    [StringLength(20)]
+    [StringLength(20, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Telefone { get; init; }
 
     [Required(ErrorMessage = "Informe a senha.")]
@@ -34,11 +34,11 @@ public sealed class LoginRequest
 {
     /// <summary>CPF (com ou sem pontuação) ou e-mail.</summary>
     [Required(ErrorMessage = "Informe o CPF ou e-mail.")]
-    [StringLength(150)]
+    [StringLength(150, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string Login { get; init; } = string.Empty;
 
     [Required(ErrorMessage = "Informe a senha.")]
-    [StringLength(100)]
+    [StringLength(100, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string Senha { get; init; } = string.Empty;
 }
 

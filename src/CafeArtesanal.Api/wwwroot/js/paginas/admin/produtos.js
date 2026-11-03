@@ -39,13 +39,13 @@ async function carregar() {
   const area = $('#tabela-produtos', raiz);
   if (!produtos.length) renderizar(area, estadoCarregando());
   try {
-    const [pagina, cats] = await Promise.all([
-      api.produtos.pesquisar({ busca: filtro.busca, incluirInativos: filtro.incluirInativos, ordenar: 'nome', tamanhoPagina: 100 }),
+    const [lista, cats] = await Promise.all([
+      api.produtos.todos({ busca: filtro.busca, incluirInativos: filtro.incluirInativos, ordenar: 'nome' }),
       api.categorias.listar(true)
     ]);
-    produtos = pagina.itens;
+    produtos = lista;
     categorias = cats;
-    $('#info-produtos', raiz).textContent = `${pagina.totalItens} produto(s).`;
+    $('#info-produtos', raiz).textContent = `${produtos.length} produto(s).`;
     desenhar(area);
   } catch (erro) {
     renderizar(area, estadoErro(erro));

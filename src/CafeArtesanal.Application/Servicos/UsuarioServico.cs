@@ -36,7 +36,7 @@ public sealed class UsuarioServico(
             await GarantirOutroAdminAsync(ct);
 
         usuario.AlterarPerfil(perfil);
-        // O perfil vai dentro do token: as sessões atuais são encerradas para valer na hora.
+        // O perfil vai dentro do token: a pessoa precisa entrar de novo para receber o novo perfil.
         await refreshTokens.RevogarTodosDoUsuarioAsync(id, ct);
         await unidadeDeTrabalho.SalvarAsync(ct);
     }

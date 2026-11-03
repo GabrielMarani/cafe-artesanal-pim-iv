@@ -13,7 +13,9 @@ public sealed class PedidoConfiguracao : IEntityTypeConfiguration<Pedido>
         b.HasKey(p => p.Id);
         b.Property(p => p.Id).HasColumnName("ID_PEDIDO");
         b.Property(p => p.UsuarioId).HasColumnName("ID_USUARIO");
-        b.Property(p => p.Status).HasColumnName("STATUS_PEDIDO").HasConversion(new ConversorCodigoEnum<StatusPedido>());
+        // Concorrência otimista: se duas pessoas alterarem o mesmo pedido ao mesmo tempo,
+        // só a primeira grava; a outra recebe um conflito em vez de sobrescrever.
+        b.Property(p => p.Status).HasColumnName("STATUS_PEDIDO").HasConversion(new ConversorCodigoEnum<StatusPedido>()).IsConcurrencyToken();
         b.Property(p => p.TipoEntrega).HasColumnName("TIPO_ENTREGA").HasConversion(new ConversorCodigoEnum<TipoEntrega>());
         b.Property(p => p.FormaPagamento).HasColumnName("FORMA_PAGAMENTO").HasConversion(new ConversorCodigoEnum<FormaPagamento>());
         b.Property(p => p.Subtotal).HasColumnName("SUBTOTAL").HasPrecision(10, 2);

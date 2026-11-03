@@ -15,7 +15,6 @@ class Shell extends StatefulWidget {
   static void irPara(BuildContext context, int aba) => context.findAncestorStateOfType<_ShellState>()?._selecionar(aba);
 
   static const abaCardapio = 0;
-  static const abaPedidos = 2;
 
   @override
   State<Shell> createState() => _ShellState();

@@ -13,9 +13,12 @@ const FILTROS = [
   ['saiu_para_entrega', 'Saiu para entrega'], ['entregue', 'Entregues'], ['cancelado', 'Cancelados'], ['', 'Todos']
 ];
 const INTERVALO = 20000;
+const POR_PAGINA = 15;
+const MAXIMO_API = 100;
 
 let raiz;
-const estado = { status: 'abertos', busca: '', pagina: 1, totalPaginas: 1, pedidos: [], idsConhecidos: null, detalhes: new Map() };
+let requisicaoAtual = 0;
+const estado = { status: 'abertos', busca: '', pagina: 1, totalPaginas: 1, pedidos: [], assinatura: '', idsConhecidos: null, detalhes: new Map() };
 
 export function montar(elemento) {
   raiz = elemento;
@@ -61,15 +64,30 @@ export const aoAtivar = () => carregar(1, { silencioso: true });
 
 async function carregar(pagina = 1, { silencioso = false } = {}) {
   const lista = $('#lista-pedidos', raiz);
+  // A atualização automática relê tudo o que já está na tela, sem voltar para a primeira página.
+  const tamanhoPagina = silencioso ? POR_PAGINA * estado.pagina : POR_PAGINA;
+  if (tamanhoPagina > MAXIMO_API) return;
   if (!silencioso && pagina === 1) renderizar(lista, estadoCarregando('Carregando pedidos...'));
+  const numero = ++requisicaoAtual; // ignora respostas antigas se o filtro mudar nesse meio-tempo
   try {
-    const resultado = await api.pedidos.pesquisar({ status: estado.status, busca: estado.busca, pagina, tamanhoPagina: 15 });
+    const resultado = await api.pedidos.pesquisar({ status: estado.status, busca: estado.busca, pagina, tamanhoPagina });
+    if (numero !== requisicaoAtual) return;
     avisarNovos(resultado.itens);
     estado.pedidos = pagina === 1 ? resultado.itens : [...estado.pedidos, ...resultado.itens];
-    estado.pagina = pagina;
-    estado.totalPaginas = resultado.totalPaginas;
+    if (!silencioso) estado.pagina = pagina;
+    estado.totalPaginas = Math.ceil(resultado.totalItens / POR_PAGINA);
+    // Status mudou: a linha do tempo guardada ficou velha e é buscada de novo ao redesenhar.
+    resultado.itens.forEach((p) => {
+      const detalhe = estado.detalhes.get(p.id);
+      if (detalhe && detalhe.status !== p.status) estado.detalhes.delete(p.id);
+    });
     $('#info-pedidos', raiz).textContent =
       `${resultado.totalItens} pedido(s). Atualizado às ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}.`;
+
+    // Sem novidades a tela não é redesenhada: o foco do teclado e do leitor de tela continuam onde estão.
+    const assinatura = JSON.stringify(estado.pedidos);
+    if (silencioso && assinatura === estado.assinatura) return;
+    estado.assinatura = assinatura;
     desenhar();
   } catch (erro) {
     if (!silencioso) renderizar(lista, estadoErro(erro));
@@ -102,7 +120,7 @@ function cartao(p, aberto) {
   return html`<article class="cartao" data-id="${p.id}" aria-labelledby="pedido-${p.id}">
     <div class="linha-entre">
       <div>
-        <h3 id="pedido-${p.id}" class="mb-0">Pedido ${p.numero} ${seloStatus(p.status, p.statusRotulo)}</h3>
+        <h2 id="pedido-${p.id}" class="mb-0 titulo-pedido">Pedido ${p.numero} ${seloStatus(p.status, p.statusRotulo)}</h2>
         <div class="texto-suave">${p.cliente?.nome ?? 'Cliente removido'}${p.cliente?.telefone ? ` · ${p.cliente.telefone}` : ''} · ${formatarData(p.dataPedido)}</div>
         <div class="texto-suave">${icone(p.tipoEntrega === 'entrega' ? 'entrega' : 'loja')} ${p.tipoEntrega === 'entrega' ? 'Entrega' : 'Retirada no balcão'} · ${p.formaPagamentoRotulo}</div>
       </div>
@@ -173,7 +191,8 @@ async function tratarClique(e) {
     aviso.sucesso(`Pedido ${atualizado.numero}: ${atualizado.statusRotulo}.`);
     await carregar(1, { silencioso: true });
   } catch (erro) {
-    definirCarregando(botao, false);
     aviso.erro(erro.message);
+  } finally {
+    definirCarregando(botao, false);
   }
 }

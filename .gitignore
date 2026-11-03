@@ -5,9 +5,6 @@ obj/
 .vs/
 TestResults/
 
-# Node / Expo (o app tem o próprio .gitignore em mobile/)
-node_modules/
-
 # Segredos e arquivos locais
 .env
 *.zip

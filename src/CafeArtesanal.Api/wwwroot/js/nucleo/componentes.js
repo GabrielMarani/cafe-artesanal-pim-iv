@@ -44,7 +44,7 @@ export function progressoPedido(pedido) {
 
 export function linhaDoTempo(historico = []) {
   if (!historico.length) return '';
-  return html`<h4>Linha do tempo</h4>
+  return html`<p class="mt-2 mb-0"><strong>Linha do tempo</strong></p>
     <ol class="linha-tempo">
       ${historico.map((h) => html`<li>
         <strong>${h.rotulo}</strong>

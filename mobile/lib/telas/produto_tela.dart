@@ -48,7 +48,7 @@ class _ProdutoTelaState extends State<ProdutoTela> {
           padding: const EdgeInsets.all(16),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text((produto.categoriaNome ?? '').toUpperCase(),
-                style: const TextStyle(color: TemaCafe.destaqueTexto, fontWeight: FontWeight.w700)),
+                style: TextStyle(color: TemaCafe.destaque(context), fontWeight: FontWeight.w700)),
             Semantics(
               header: true,
               child: Text(produto.nome, style: tema.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
@@ -91,7 +91,7 @@ class _ProdutoTelaState extends State<ProdutoTela> {
             ] else
               Text(
                 produto.disponivel ? 'Você já colocou todo o estoque disponível no carrinho.' : 'Produto indisponível no momento.',
-                style: const TextStyle(color: Color(0xFF7A4F00), fontWeight: FontWeight.w600),
+                style: TextStyle(color: TemaCafe.aviso(context), fontWeight: FontWeight.w600),
               ),
           ]),
         ),

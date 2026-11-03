@@ -8,13 +8,17 @@ import {
 } from '../nucleo/ui.js';
 
 const INTERVALO_ATUALIZACAO = 20000;
+const POR_PAGINA = 10;
+const MAXIMO_API = 100;
 
 const estado = {
-  filtro: '', pagina: 1, totalPaginas: 1, pedidos: [],
+  filtro: '', pagina: 1, totalPaginas: 1, pedidos: [], assinatura: '',
   detalhes: new Map(),  // id → pedido completo (com linha do tempo)
   abertos: new Set(),   // ids expandidos na tela
   novoId: Number(new URLSearchParams(location.search).get('novo')) || null
 };
+
+let requisicaoAtual = 0;
 
 if (exigirLogin()) {
   if (sessao.ehEquipe()) location.replace('admin.html');
@@ -52,17 +56,28 @@ function iniciar() {
 
 async function carregar(pagina = 1, { silencioso = false } = {}) {
   const lista = $('#lista');
+  // A atualização automática relê tudo o que já está na tela, sem voltar para a primeira página.
+  const tamanhoPagina = silencioso ? POR_PAGINA * estado.pagina : POR_PAGINA;
+  if (tamanhoPagina > MAXIMO_API) return;
   if (!silencioso && pagina === 1) renderizar(lista, estadoCarregando('Carregando seus pedidos...'));
+  const numero = ++requisicaoAtual; // ignora respostas antigas se o filtro mudar nesse meio-tempo
   try {
-    const resultado = await api.pedidos.pesquisar({ status: estado.filtro, pagina, tamanhoPagina: 10 });
+    const resultado = await api.pedidos.pesquisar({ status: estado.filtro, pagina, tamanhoPagina });
+    if (numero !== requisicaoAtual) return;
     estado.pedidos = pagina === 1 ? resultado.itens : [...estado.pedidos, ...resultado.itens];
-    estado.pagina = pagina;
-    estado.totalPaginas = resultado.totalPaginas;
+    if (!silencioso) estado.pagina = pagina;
+    estado.totalPaginas = Math.ceil(resultado.totalItens / POR_PAGINA);
 
     // Detalhes abertos são recarregados para refletir a linha do tempo atual.
     await Promise.all([...estado.abertos].map(async (id) => {
       try { estado.detalhes.set(id, await api.pedidos.obter(id)); } catch { estado.abertos.delete(id); }
     }));
+    if (numero !== requisicaoAtual) return;
+
+    // Sem novidades a tela não é redesenhada: o foco do teclado e do leitor de tela continuam onde estão.
+    const assinatura = JSON.stringify([estado.pedidos, [...estado.detalhes]]);
+    if (silencioso && assinatura === estado.assinatura) return;
+    estado.assinatura = assinatura;
     desenhar();
   } catch (erro) {
     if (!silencioso) renderizar(lista, estadoErro(erro));

@@ -25,7 +25,21 @@ public static class ConfiguracaoPipeline
     public static WebApplication UsarPipelineApi(this WebApplication app)
     {
         app.UseExceptionHandler();
-        app.UseStatusCodePages();
+        app.UseStatusCodePages(async c =>
+        {
+            var http = c.HttpContext;
+            // Endereço inexistente aberto no navegador mostra a página amigável; o resto recebe ProblemDetails.
+            if (http.Response.StatusCode == StatusCodes.Status404NotFound
+                && !http.Request.Path.StartsWithSegments("/api")
+                && http.Request.Headers.Accept.ToString().Contains("text/html"))
+            {
+                http.Response.ContentType = "text/html; charset=utf-8";
+                await http.Response.SendFileAsync(app.Environment.WebRootFileProvider.GetFileInfo("404.html"));
+                return;
+            }
+            await http.RequestServices.GetRequiredService<IProblemDetailsService>()
+                .TryWriteAsync(new ProblemDetailsContext { HttpContext = http });
+        });
 
         if (!app.Environment.IsDevelopment())
             app.UseHsts();
@@ -49,12 +63,16 @@ public static class ConfiguracaoPipeline
             OnPrepareResponse = c => c.Context.Response.Headers.CacheControl = "no-cache"
         });
 
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
+        // Em produção a documentação só aparece se for ligada de propósito (Swagger:Habilitado).
+        if (app.Configuration.GetValue("Swagger:Habilitado", false))
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Café Artesanal API v1");
-            c.DocumentTitle = "Café Artesanal - Documentação da API";
-        });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Café Artesanal API v1");
+                c.DocumentTitle = "Café Artesanal - Documentação da API";
+            });
+        }
 
         app.UseCors();
         app.UseRateLimiter();

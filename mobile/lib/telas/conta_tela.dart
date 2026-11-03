@@ -5,11 +5,14 @@ import '../api/cliente_api.dart';
 import '../api/modelos.dart';
 import '../api/servicos_api.dart';
 import '../core/config.dart';
+import '../core/tema.dart';
 import '../estado/sessao_estado.dart';
 import '../widgets/componentes.dart';
 import 'cadastro_tela.dart';
 import 'endereco_tela.dart';
 import 'login_tela.dart';
+import 'perfil_tela.dart';
+import 'senha_tela.dart';
 import 'servidor_tela.dart';
 
 class ContaTela extends StatefulWidget {
@@ -30,7 +33,11 @@ class _ContaTelaState extends State<ContaTela> {
     final logado = context.watch<SessaoEstado>().estaLogado;
     if (logado != _logadoAntes) {
       _logadoAntes = logado;
-      if (logado) _carregarEnderecos();
+      if (logado) {
+        _carregarEnderecos();
+      } else {
+        _enderecos = [];
+      }
     }
   }
 
@@ -40,6 +47,19 @@ class _ContaTelaState extends State<ContaTela> {
       if (mounted) setState(() => _enderecos = lista);
     } on ErroApi {
       // Sem conexão: a lista fica como está.
+    }
+  }
+
+  Future<void> _removerEndereco(Endereco endereco) async {
+    final sim = await confirmar(context,
+        titulo: 'Remover endereço', mensagem: 'Remover "${endereco.apelido}"?', confirmar: 'Remover', destrutivo: true);
+    if (!sim) return;
+    try {
+      await ServicosApi.removerEndereco(endereco.id);
+      await _carregarEnderecos();
+      if (mounted) mostrarAviso(context, 'Endereço removido.');
+    } on ErroApi catch (e) {
+      if (mounted) mostrarAviso(context, e.mensagem);
     }
   }
 
@@ -82,10 +102,26 @@ class _ContaTelaState extends State<ContaTela> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text('Perfil ${usuario.perfil}: use o painel web para gerenciar a loja.',
-                      style: const TextStyle(color: Color(0xFF7A4F00))),
+                      style: TextStyle(color: TemaCafe.aviso(context))),
                 ),
             ]),
           ),
+        ),
+        Card(
+          child: Column(children: [
+            ListTile(
+              leading: const Icon(Icons.edit_outlined),
+              title: const Text('Editar meus dados'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _abrir(const PerfilTela()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.lock_outline),
+              title: const Text('Alterar senha'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _abrir(const SenhaTela()),
+            ),
+          ]),
         ),
         Card(
           child: Padding(
@@ -100,6 +136,11 @@ class _ContaTelaState extends State<ContaTela> {
                   leading: const Icon(Icons.location_on_outlined),
                   title: Text(e.principal ? '${e.apelido} · principal' : e.apelido),
                   subtitle: Text(e.descricao),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete_outline),
+                    tooltip: 'Remover endereço ${e.apelido}',
+                    onPressed: () => _removerEndereco(e),
+                  ),
                 ),
               const SizedBox(height: 8),
               OutlinedButton.icon(
@@ -129,7 +170,7 @@ class _ContaTelaState extends State<ContaTela> {
           const ListTile(
             leading: Icon(Icons.accessibility_new),
             title: Text('Acessibilidade'),
-            subtitle: Text('O app segue o tamanho de fonte, o modo escuro e o leitor de tela (TalkBack/VoiceOver) do celular.'),
+            subtitle: Text('O app segue o tamanho de fonte, o modo escuro e o leitor de tela (TalkBack) do celular.'),
           ),
         ]),
       ),

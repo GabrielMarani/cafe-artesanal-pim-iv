@@ -38,6 +38,15 @@ class ServicosApi {
   static Future<Endereco> criarEndereco(Map<String, dynamic> dados) async =>
       Endereco.fromJson(await _api.post('/conta/enderecos', dados) as Map<String, dynamic>);
 
+  static Future<void> removerEndereco(int id) => _api.delete('/conta/enderecos/$id');
+
+  static Future<Usuario> atualizarPerfil(Map<String, dynamic> dados) async =>
+      Usuario.fromJson(await _api.put('/conta/perfil', dados) as Map<String, dynamic>);
+
+  /// A API encerra as outras sessões e devolve uma nova para este aparelho.
+  static Future<Sessao> alterarSenha(String senhaAtual, String novaSenha) async => Sessao.fromJson(
+      await _api.put('/conta/senha', {'senhaAtual': senhaAtual, 'novaSenha': novaSenha}) as Map<String, dynamic>);
+
   // ------------------------------------------------------------------ Pedidos
 
   static Future<List<Pedido>> pedidos() async {

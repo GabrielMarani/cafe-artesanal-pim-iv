@@ -8,7 +8,7 @@ import 'armazenamento.dart';
 ///  1. endereço salvo na tela "Servidor da API";
 ///  2. `--dart-define=API_URL=http://192.168.0.10:5000/api/v1`;
 ///  3. padrão da plataforma: emulador Android usa 10.0.2.2 (o "localhost" do PC);
-///     Web e iOS usam localhost.
+///     Na web usa localhost.
 class ConfigApi {
   ConfigApi._();
 

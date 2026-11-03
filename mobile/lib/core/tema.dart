@@ -13,6 +13,13 @@ class TemaCafe {
   static const bege = Color(0xFFF5E6D3);
   static const destaqueTexto = Color(0xFF8A5426);
 
+  static bool _escuro(BuildContext contexto) => Theme.of(contexto).brightness == Brightness.dark;
+
+  /// Cores de texto sobre o fundo da tela, com contraste AA nos dois modos.
+  static Color destaque(BuildContext contexto) => _escuro(contexto) ? const Color(0xFFD9A57A) : destaqueTexto;
+  static Color aviso(BuildContext contexto) => _escuro(contexto) ? const Color(0xFFF2C46D) : const Color(0xFF7A4F00);
+  static Color sucesso(BuildContext contexto) => _escuro(contexto) ? const Color(0xFF8FD694) : const Color(0xFF2E6B30);
+
   static ThemeData get claro => _criar(ColorScheme.fromSeed(
         seedColor: cafe,
         primary: cafe,
@@ -21,6 +28,8 @@ class TemaCafe {
         // Sem isto o Material 3 deriva um tom rosado da cor-semente marrom.
         secondaryContainer: bege,
         onSecondaryContainer: cafe,
+        inverseSurface: cafe,
+        onInverseSurface: creme,
         tertiary: caramelo,
         surface: Colors.white,
         brightness: Brightness.light,
@@ -33,6 +42,8 @@ class TemaCafe {
         secondary: const Color(0xFFA9C47A),
         secondaryContainer: const Color(0xFF40352F),
         onSecondaryContainer: bege,
+        inverseSurface: bege,
+        onInverseSurface: cafe,
         tertiary: caramelo,
         surface: const Color(0xFF241E1B),
         brightness: Brightness.dark,

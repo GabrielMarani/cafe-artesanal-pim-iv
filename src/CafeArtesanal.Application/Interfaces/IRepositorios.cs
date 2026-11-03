@@ -2,6 +2,7 @@ using CafeArtesanal.Application.Comum;
 using CafeArtesanal.Application.DTOs;
 using CafeArtesanal.Domain.Comum;
 using CafeArtesanal.Domain.Entidades;
+using CafeArtesanal.Domain.Enums;
 
 namespace CafeArtesanal.Application.Interfaces;
 
@@ -47,6 +48,10 @@ public interface IUsuarioRepositorio : IRepositorio<Usuario>
     Task<bool> ExisteCpfAsync(string cpf, CancellationToken ct = default);
     Task<bool> ExisteEmailAsync(string email, int? ignorarId, CancellationToken ct = default);
     Task<int> ContarAdminsAtivosAsync(CancellationToken ct = default);
+
+    /// <summary>Situação atual da conta, conferida a cada requisição autenticada. Null se não existir.</summary>
+    Task<(bool Ativo, PerfilUsuario Perfil)?> ObterAcessoAsync(int id, CancellationToken ct = default);
+
     Task<PaginaResultado<(Usuario Usuario, int QuantidadePedidos)>> PesquisarAsync(FiltroUsuarios filtro, CancellationToken ct = default);
 }
 
@@ -68,6 +73,9 @@ public interface IRefreshTokenRepositorio : IRepositorio<RefreshToken>
 {
     Task<RefreshToken?> ObterPorHashAsync(string tokenHash, CancellationToken ct = default);
     Task RevogarTodosDoUsuarioAsync(int usuarioId, CancellationToken ct = default);
+
+    /// <summary>Apaga os tokens vencidos do usuário para a tabela não crescer sem limite.</summary>
+    Task RemoverExpiradosDoUsuarioAsync(int usuarioId, CancellationToken ct = default);
 }
 
 /// <summary>Consultas analíticas executadas por stored procedures e views.</summary>

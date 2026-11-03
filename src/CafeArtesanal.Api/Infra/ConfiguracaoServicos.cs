@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using CafeArtesanal.Application.Comum;
+using CafeArtesanal.Application.Interfaces;
+using CafeArtesanal.Domain.Enums;
 using CafeArtesanal.Infrastructure.Seguranca;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +45,7 @@ public static class ConfiguracaoServicos
         {
             var origens = config.GetSection("Cors:Origens").Get<string[]>() ?? [];
             if (origens.Length > 0) politica.WithOrigins(origens);
-            else if (ambiente.IsDevelopment()) politica.AllowAnyOrigin(); // Expo Web / testes locais
+            else if (ambiente.IsDevelopment()) politica.AllowAnyOrigin(); // app Flutter na web / testes locais
             politica.AllowAnyHeader().AllowAnyMethod();
         }));
 
@@ -76,6 +78,17 @@ public static class ConfiguracaoServicos
                 };
                 o.Events = new JwtBearerEvents
                 {
+                    // O token vale por 60 min, mas desativar a conta ou mudar o perfil precisa valer na hora.
+                    OnTokenValidated = async contexto =>
+                    {
+                        var usuarios = contexto.HttpContext.RequestServices.GetRequiredService<IUsuarioRepositorio>();
+                        var claims = contexto.Principal!;
+                        var acesso = int.TryParse(claims.FindFirst(ClaimsCafe.Id)?.Value, out var id)
+                            ? await usuarios.ObterAcessoAsync(id, contexto.HttpContext.RequestAborted)
+                            : null;
+                        if (acesso is not { Ativo: true } atual || atual.Perfil.ParaCodigo() != claims.FindFirst(ClaimsCafe.Perfil)?.Value)
+                            contexto.Fail("Conta desativada ou com perfil alterado.");
+                    },
                     OnChallenge = async contexto =>
                     {
                         contexto.HandleResponse();
@@ -168,9 +181,12 @@ public static class ConfiguracaoServicos
         {
             Status = StatusCodes.Status400BadRequest,
             Title = "Dados inválidos",
-            Detail = contexto.ModelState.Values.SelectMany(v => v.Errors)
-                         .Select(e => string.IsNullOrWhiteSpace(e.ErrorMessage) ? "Formato de dado inválido." : e.ErrorMessage)
-                         .FirstOrDefault() ?? "Verifique os dados enviados."
+            // Erros de leitura do JSON ficam nas chaves "$..." e vêm em inglês: mostra um texto genérico.
+            Detail = contexto.ModelState.Keys.Any(chave => chave.StartsWith('$'))
+                ? "Formato de dado inválido."
+                : contexto.ModelState.Values.SelectMany(v => v.Errors)
+                      .Select(e => string.IsNullOrWhiteSpace(e.ErrorMessage) || e.Exception is not null ? "Formato de dado inválido." : e.ErrorMessage)
+                      .FirstOrDefault() ?? "Verifique os dados enviados."
         };
         problema.Extensions["traceId"] = contexto.HttpContext.TraceIdentifier;
         return new BadRequestObjectResult(problema) { ContentTypes = { "application/problem+json" } };

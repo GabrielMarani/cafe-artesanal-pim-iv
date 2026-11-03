@@ -78,7 +78,7 @@ public sealed class ProdutoRepositorio(CafeDbContext contexto) : RepositorioBase
         Conjunto.AsNoTracking().Include(p => p.Categoria).FirstOrDefaultAsync(p => p.Id == id, ct);
 
     public Task<List<Produto>> ObterPorIdsAsync(IReadOnlyCollection<int> ids, CancellationToken ct = default) =>
-        Conjunto.AsNoTracking().Where(p => ids.Contains(p.Id)).ToListAsync(ct);
+        Conjunto.AsNoTracking().Include(p => p.Categoria).Where(p => ids.Contains(p.Id)).ToListAsync(ct);
 
     public Task<List<Produto>> ListarParaSincronizacaoAsync(DateTime? desde, CancellationToken ct = default)
     {

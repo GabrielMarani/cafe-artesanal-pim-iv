@@ -23,7 +23,7 @@ class _CardapioTelaState extends State<CardapioTela> {
 
   void _adicionar(Produto produto) {
     final ok = context.read<CarrinhoEstado>().adicionar(produto);
-    // O SnackBar é anunciado automaticamente pelo TalkBack/VoiceOver.
+    // O SnackBar é anunciado automaticamente pelo TalkBack.
     mostrarAviso(context, ok ? '${produto.nome} adicionado ao carrinho.' : 'Não há mais estoque de ${produto.nome}.');
   }
 
@@ -142,7 +142,7 @@ class _CartaoProduto extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text((p.categoriaNome ?? '').toUpperCase(),
-                          style: tema.textTheme.labelSmall?.copyWith(color: TemaCafe.destaqueTexto, fontWeight: FontWeight.w700)),
+                          style: tema.textTheme.labelSmall?.copyWith(color: TemaCafe.destaque(context), fontWeight: FontWeight.w700)),
                       Text(p.nome, maxLines: 2, overflow: TextOverflow.ellipsis,
                           style: tema.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
                       const SizedBox(height: 4),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../core/formatos.dart';
+import '../core/tema.dart';
 import '../estado/carrinho_estado.dart';
 import '../estado/catalogo_estado.dart';
 import '../estado/sessao_estado.dart';
@@ -32,7 +33,8 @@ class _CarrinhoTelaState extends State<CarrinhoTela> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         final removidos = context.read<CarrinhoEstado>().conciliar(catalogo.produtos);
-        if (removidos.isNotEmpty) setState(() => _removidos = removidos);
+        // Também apaga o aviso da sincronização anterior.
+        if (removidos.isNotEmpty || _removidos.isNotEmpty) setState(() => _removidos = removidos);
       });
     }
   }
@@ -68,7 +70,7 @@ class _CarrinhoTelaState extends State<CarrinhoTela> {
       if (_removidos.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(bottom: 12),
-          child: Text('Removidos por falta de estoque: ${_removidos.join(', ')}', style: const TextStyle(color: Color(0xFF7A4F00))),
+          child: Text('Removidos por falta de estoque: ${_removidos.join(', ')}', style: TextStyle(color: TemaCafe.aviso(context))),
         ),
       for (final item in carrinho.itens)
         Card(
@@ -115,7 +117,7 @@ class _CarrinhoTelaState extends State<CarrinhoTela> {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text('Pedido mínimo de ${formatarMoeda(pedidoMinimo)}.',
-                    style: const TextStyle(color: Color(0xFF7A4F00), fontWeight: FontWeight.w600)),
+                    style: TextStyle(color: TemaCafe.aviso(context), fontWeight: FontWeight.w600)),
               ),
           ]),
         ),

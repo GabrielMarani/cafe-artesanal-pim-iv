@@ -12,8 +12,8 @@ import '../widgets/componentes.dart';
 import 'login_tela.dart';
 import 'pedido_tela.dart';
 
-/// Lista de pedidos do cliente. Enquanto a aba está visível, os status
-/// são sincronizados com a API a cada 15 segundos.
+/// Lista de pedidos do cliente. Enquanto a aba está visível e há pedido em
+/// andamento, os status são sincronizados com a API a cada 15 segundos.
 class PedidosTela extends StatefulWidget {
   const PedidosTela({super.key, required this.visivel});
 
@@ -29,11 +29,19 @@ class _PedidosTelaState extends State<PedidosTela> {
   List<Pedido>? _pedidos;
   String? _erro;
   Timer? _timer;
+  int? _usuarioId;
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.visivel) _iniciarSincronizacao();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Troca de conta: nada do usuário anterior continua na tela.
+    final id = context.watch<SessaoEstado>().usuario?.id;
+    if (id == _usuarioId) return;
+    _usuarioId = id;
+    _pedidos = null;
+    _erro = null;
+    _timer?.cancel();
+    if (id != null && widget.visivel) _iniciarSincronizacao();
   }
 
   @override
@@ -52,20 +60,25 @@ class _PedidosTelaState extends State<PedidosTela> {
   void _iniciarSincronizacao() {
     _carregar();
     _timer?.cancel();
-    _timer = Timer.periodic(_intervalo, (_) => _carregar());
+    _timer = Timer.periodic(_intervalo, (_) {
+      // Todos finalizados: não há o que acompanhar. Ao voltar para a aba, atualiza de novo.
+      if (_pedidos?.every((p) => p.status.finalizado) ?? false) return;
+      _carregar();
+    });
   }
 
   Future<void> _carregar() async {
-    if (!context.read<SessaoEstado>().estaLogado) return;
+    final id = _usuarioId;
+    if (id == null) return;
     try {
       final pedidos = await ServicosApi.pedidos();
-      if (!mounted) return;
+      if (!mounted || id != _usuarioId) return;
       setState(() {
         _pedidos = pedidos;
         _erro = null;
       });
     } on ErroApi catch (e) {
-      if (mounted) setState(() => _erro = e.mensagem);
+      if (mounted && id == _usuarioId) setState(() => _erro = e.mensagem);
     }
   }
 
@@ -81,10 +94,7 @@ class _PedidosTelaState extends State<PedidosTela> {
         acao: FilledButton.icon(
           icon: const Icon(Icons.login),
           label: const Text('Entrar'),
-          onPressed: () async {
-            await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LoginTela()));
-            _iniciarSincronizacao();
-          },
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LoginTela())),
         ),
       );
     }

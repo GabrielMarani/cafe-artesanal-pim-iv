@@ -1,3 +1,4 @@
+using CafeArtesanal.Application.Comum;
 using CafeArtesanal.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,10 @@ public sealed class UnidadeDeTrabalho(CafeDbContext contexto) : IUnidadeDeTrabal
         try
         {
             await contexto.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new ConflitoException("Este registro acabou de ser alterado por outra pessoa. Atualize a tela e tente de novo.");
         }
         catch (DbUpdateException ex) when (TradutorErroBanco.Traduzir(ex) is { } traduzida)
         {

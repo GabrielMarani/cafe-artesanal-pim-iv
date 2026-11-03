@@ -11,3 +11,8 @@ Consome a API REST em `src/CafeArtesanal.Api`. Como rodar: veja o [README princi
 | `lib/widgets` | Componentes reutilizáveis |
 | `lib/core` | Configuração, tema, formatação e armazenamento local |
 | `test` | Testes de unidade e de widget |
+
+## Plataformas
+
+O projeto é gerado para Android e Web. A pasta `ios/` foi removida porque não dá para compilar para iOS no Windows;
+para recriá-la em um Mac, rode `flutter create --platforms=ios .` dentro de `mobile/`.

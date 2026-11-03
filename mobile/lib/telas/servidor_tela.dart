@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../api/cliente_api.dart';
+import '../core/tema.dart';
 import '../api/servicos_api.dart';
 import '../core/config.dart';
 import '../estado/catalogo_estado.dart';
@@ -75,7 +76,7 @@ class _ServidorTelaState extends State<ServidorTela> {
             liveRegion: true,
             child: Text(resultado.$2,
                 style: TextStyle(
-                  color: resultado.$1 ? const Color(0xFF2E6B30) : Theme.of(context).colorScheme.error,
+                  color: resultado.$1 ? TemaCafe.sucesso(context) : Theme.of(context).colorScheme.error,
                   fontWeight: FontWeight.w600,
                 )),
           ),

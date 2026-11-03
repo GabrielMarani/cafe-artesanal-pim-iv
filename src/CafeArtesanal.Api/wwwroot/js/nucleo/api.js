@@ -38,6 +38,7 @@ export const api = {
   },
 
   loja: () => requisitar('/loja', { autenticar: false }),
+  catalogoCompleto: () => requisitar('/sync/catalogo', { autenticar: false }),
 
   categorias: {
     listar: (incluirInativas = false) => requisitar(`/categorias${consulta({ incluirInativas: incluirInativas || undefined })}`),
@@ -48,6 +49,13 @@ export const api = {
 
   produtos: {
     pesquisar: (filtro = {}) => requisitar(`/produtos${consulta(filtro)}`),
+    /** Junta todas as páginas: a API devolve no máximo 100 produtos por vez. */
+    async todos(filtro = {}) {
+      const buscar = (pagina) => api.produtos.pesquisar({ ...filtro, pagina, tamanhoPagina: 100 });
+      const primeira = await buscar(1);
+      const demais = await Promise.all(Array.from({ length: primeira.totalPaginas - 1 }, (_, i) => buscar(i + 2)));
+      return [primeira, ...demais].flatMap((p) => p.itens);
+    },
     obter: (id) => requisitar(`/produtos/${id}`),
     criar: (dados) => requisitar('/produtos', { metodo: 'POST', corpo: dados }),
     atualizar: (id, dados) => requisitar(`/produtos/${id}`, { metodo: 'PUT', corpo: dados }),

@@ -577,7 +577,7 @@ INSERT INTO tb_produto
 (4,  1, 'Café Americano',         'Espresso duplo diluído em água quente, mantendo todo o sabor',              'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=400&fit=crop&q=80',  7.50, 120, 15, 0),
 (5,  1, 'Macchiato',              'Espresso marcado com uma pequena porção de espuma de leite',                'https://images.unsplash.com/photo-1557006021-b85faa2bc5e2?w=400&h=400&fit=crop&q=80',  7.00, 100, 15, 0),
 (6,  1, 'Flat White',             'Espresso duplo com microespuma aveludada de leite, estilo australiano',     'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&h=400&fit=crop&q=80', 11.00,  80, 10, 0),
-(7,  1, 'Mocha',                  'Espresso com calda de chocolate belga, leite vaporizado e chantilly',      'https://images.unsplash.com/photo-1578374173705-9cb1941c9877?w=400&h=400&fit=crop&q=80', 12.50,  80, 10, 0),
+(7,  1, 'Mocha',                  'Espresso com calda de chocolate belga, leite vaporizado e chantilly',      'https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=400&h=400&fit=crop&q=80', 12.50,  80, 10, 0),
 -- Bebidas
 (8,  2, 'Iced Latte',             'Espresso gelado com leite cremoso e gelo, refrescante e saboroso',         'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=400&h=400&fit=crop&q=80', 11.00,  90, 10, 0),
 (9,  2, 'Cold Brew',              'Café extraído a frio por 16 horas, sabor suave e doce natural',            'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=400&fit=crop&q=80', 13.00,  60, 10, 0),
@@ -591,13 +591,13 @@ INSERT INTO tb_produto
 (16, 3, 'Brownie Artesanal',      'Brownie denso com chocolate 70% cacau e nozes',                             'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=400&fit=crop&q=80', 10.50,  30,  6, 0),
 (17, 3, 'Torta de Limão',         'Torta cremosa de limão com merengue suíço',                                 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=400&fit=crop&q=80', 11.00,   7,  6, 0),
 (18, 3, 'Cookie Americano',       'Cookie crocante com gotas de chocolate ao leite',                          'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=400&fit=crop&q=80',  7.50,  50, 10, 0),
-(19, 3, 'Cheesecake',             'Cheesecake cremoso com calda de frutas vermelhas',                         'https://images.unsplash.com/photo-1533134242820-b4f3c128b34e?w=400&h=400&fit=crop&q=80', 13.50,  20,  5, 0),
+(19, 3, 'Cheesecake',             'Cheesecake cremoso com calda de frutas vermelhas',                         'https://images.unsplash.com/photo-1567171466295-4afa63d45416?w=400&h=400&fit=crop&q=80', 13.50,  20,  5, 0),
 (20, 3, 'Sanduíche Natural',      'Sanduíche de pão integral com frango, alface e tomate',                    'https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=400&fit=crop&q=80', 12.00,   4,  5, 0),
 -- Grãos
 (21, 4, 'Café em Grãos 250g',     'Grãos arábica premium torrados artesanalmente, torra média',               'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&h=400&fit=crop&q=80', 32.00,  30,  5, 0),
 (22, 4, 'Café em Grãos 500g',     'Blend especial de grãos arábica e robusta, torra escura',                  'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&h=400&fit=crop&q=80', 58.00,  20,  5, 0),
 (23, 4, 'Café Gourmet 1kg',       '100% arábica de origem única, notas de chocolate e caramelo',              'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=400&h=400&fit=crop&q=80', 98.00,  10,  3, 0),
-(24, 4, 'Café Moído 250g',        'Café moído na hora, moagem média para filtro e prensa francesa',           'https://images.unsplash.com/photo-1585650964051-1c6f8e4b5767?w=400&h=400&fit=crop&q=80', 28.00,  35,  5, 0),
+(24, 4, 'Café Moído 250g',        'Café moído na hora, moagem média para filtro e prensa francesa',           'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=400&h=400&fit=crop&q=80', 28.00,  35,  5, 0),
 (25, 4, 'Café Especial 500g',     'Grãos especiais pontuação 85+, torra clara com notas frutadas',            'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=400&h=400&fit=crop&q=80', 75.00,  12,  3, 0);
 
 -- Usuários de demonstração (senhas com hash PBKDF2-SHA256, 100.000 iterações)

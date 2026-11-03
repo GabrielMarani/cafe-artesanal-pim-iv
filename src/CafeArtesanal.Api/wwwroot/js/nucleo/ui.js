@@ -202,10 +202,10 @@ export const estadoCarregando = (texto = 'Carregando...') =>
   html`<div class="carregando" role="status"><div class="giratorio" aria-hidden="true"></div><p>${texto}</p></div>`;
 
 export const estadoVazio = ({ icone: nomeIcone = 'info', titulo, texto = '', acao = '' }) =>
-  html`<div class="vazio">${icone(nomeIcone)}<h3>${titulo}</h3>${texto ? html`<p>${texto}</p>` : ''}${acao}</div>`;
+  html`<div class="vazio">${icone(nomeIcone)}<h2>${titulo}</h2>${texto ? html`<p>${texto}</p>` : ''}${acao}</div>`;
 
 export const estadoErro = (erro, rotuloAcao = 'Tentar novamente') =>
-  html`<div class="vazio" role="alert">${icone('alerta')}<h3>Não foi possível carregar</h3>
+  html`<div class="vazio" role="alert">${icone('alerta')}<h2>Não foi possível carregar</h2>
     <p>${erro?.message ?? erro}</p>
     <button type="button" class="botao" data-acao="tentar-novamente">${icone('atualizar')} ${rotuloAcao}</button></div>`;
 

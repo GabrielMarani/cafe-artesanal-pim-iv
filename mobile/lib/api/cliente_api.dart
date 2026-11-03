@@ -19,6 +19,24 @@ class ErroApi implements Exception {
   String toString() => mensagem;
 }
 
+/// Transforma a resposta em dados, ou em [ErroApi] quando há erro ou o corpo não é o JSON
+/// esperado (ex.: uma página HTML porque o endereço do servidor está errado).
+dynamic interpretarResposta(int status, List<int> corpo) {
+  dynamic dados;
+  try {
+    dados = corpo.isEmpty ? null : jsonDecode(utf8.decode(corpo));
+  } on FormatException {
+    if (status < 400) {
+      throw ErroApi(status, 'O servidor respondeu em um formato inesperado. Confira o endereço em Conta › Servidor da API.');
+    }
+  }
+  if (status >= 400) {
+    final problema = dados is Map<String, dynamic> ? dados : const <String, dynamic>{};
+    throw ErroApi(status, (problema['detail'] ?? problema['title'] ?? 'Erro $status') as String);
+  }
+  return dados;
+}
+
 /// Cliente HTTP da API REST: JSON, timeout, token JWT e renovação automática
 /// da sessão com o refresh token quando a API responde 401.
 class ClienteApi {
@@ -28,7 +46,8 @@ class ClienteApi {
 
   static const _timeout = Duration(seconds: 12);
 
-  final http.Client _http = http.Client();
+  /// Substituível nos testes por um cliente simulado.
+  http.Client httpCliente = http.Client();
   Sessao? sessao;
 
   /// Chamado quando a sessão muda por renovação ou expiração (o estado salva e avisa a tela).
@@ -41,6 +60,10 @@ class ClienteApi {
   Future<dynamic> post(String caminho, [Object? corpo, bool autenticar = true]) =>
       _enviar('POST', caminho, corpo: corpo, autenticar: autenticar);
 
+  Future<dynamic> put(String caminho, Object? corpo) => _enviar('PUT', caminho, corpo: corpo);
+
+  Future<dynamic> delete(String caminho) => _enviar('DELETE', caminho);
+
   Future<dynamic> _enviar(String metodo, String caminho,
       {Object? corpo, bool autenticar = true, bool repetir = true}) async {
     final cabecalhos = {'Accept': 'application/json', if (corpo != null) 'Content-Type': 'application/json'};
@@ -52,7 +75,7 @@ class ClienteApi {
 
     http.Response resposta;
     try {
-      resposta = await http.Response.fromStream(await _http.send(requisicao).timeout(_timeout));
+      resposta = await http.Response.fromStream(await httpCliente.send(requisicao).timeout(_timeout));
     } on TimeoutException {
       throw ErroApi(0, 'O servidor demorou para responder. Tente novamente.');
     } catch (_) {
@@ -67,15 +90,7 @@ class ClienteApi {
       aoAlterarSessao?.call(null);
     }
 
-    if (resposta.statusCode == 204 || resposta.body.isEmpty) return null;
-
-    final dados = jsonDecode(utf8.decode(resposta.bodyBytes));
-    if (resposta.statusCode >= 400) {
-      final problema = dados is Map<String, dynamic> ? dados : const <String, dynamic>{};
-      throw ErroApi(resposta.statusCode,
-          (problema['detail'] ?? problema['title'] ?? 'Erro ${resposta.statusCode}') as String);
-    }
-    return dados;
+    return interpretarResposta(resposta.statusCode, resposta.bodyBytes);
   }
 
   /// Uma renovação por vez, mesmo que várias chamadas recebam 401 juntas.
@@ -86,7 +101,9 @@ class ClienteApi {
           sessao = Sessao.fromJson(json as Map<String, dynamic>);
           aoAlterarSessao?.call(sessao);
           return true;
-        } catch (_) {
+        } on ErroApi catch (e) {
+          // Sem internet a sessão continua valendo: não desconecta a pessoa por causa disso.
+          if (e.semConexao) rethrow;
           return false;
         } finally {
           _renovacao = null;

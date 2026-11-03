@@ -36,6 +36,17 @@ class SessaoEstado extends ChangeNotifier {
 
   Future<Usuario> registrar(Map<String, dynamic> dados) async => _iniciar(await ServicosApi.registrar(dados));
 
+  Future<void> atualizarPerfil(Map<String, dynamic> dados) async {
+    final usuario = await ServicosApi.atualizarPerfil(dados);
+    final atual = _api.sessao;
+    if (atual != null) {
+      await _iniciar(Sessao(accessToken: atual.accessToken, refreshToken: atual.refreshToken, usuario: usuario));
+    }
+  }
+
+  Future<void> alterarSenha(String senhaAtual, String novaSenha) async =>
+      _iniciar(await ServicosApi.alterarSenha(senhaAtual, novaSenha));
+
   Future<void> sair() async {
     final refreshToken = _api.sessao?.refreshToken;
     _api.sessao = null;

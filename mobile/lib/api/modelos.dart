@@ -16,6 +16,9 @@ enum StatusPedido {
   final String codigo;
   final String rotulo;
 
+  /// Pedido encerrado: o status não muda mais.
+  bool get finalizado => this == entregue || this == cancelado;
+
   static StatusPedido deCodigo(String codigo) => values.firstWhere((s) => s.codigo == codigo);
 }
 

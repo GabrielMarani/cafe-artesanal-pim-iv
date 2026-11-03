@@ -16,6 +16,7 @@ public sealed class GeradorSessao(
         var acesso = servicoToken.GerarAccessToken(usuario);
         var refresh = servicoToken.GerarRefreshToken();
 
+        await refreshTokens.RemoverExpiradosDoUsuarioAsync(usuario.Id, ct);
         refreshTokens.Adicionar(RefreshToken.Criar(usuario.Id, refresh.Hash, servicoToken.ValidadeRefreshToken));
         await unidadeDeTrabalho.SalvarAsync(ct);
 

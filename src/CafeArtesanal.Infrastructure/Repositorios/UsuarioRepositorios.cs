@@ -26,6 +26,15 @@ public sealed class UsuarioRepositorio(CafeDbContext contexto) : RepositorioBase
     public Task<int> ContarAdminsAtivosAsync(CancellationToken ct = default) =>
         Conjunto.CountAsync(u => u.Perfil == PerfilUsuario.Admin && u.Ativo, ct);
 
+    public async Task<(bool Ativo, PerfilUsuario Perfil)?> ObterAcessoAsync(int id, CancellationToken ct = default)
+    {
+        var acesso = await Conjunto.AsNoTracking()
+            .Where(u => u.Id == id)
+            .Select(u => new { u.Ativo, u.Perfil })
+            .FirstOrDefaultAsync(ct);
+        return acesso is null ? null : (acesso.Ativo, acesso.Perfil);
+    }
+
     public async Task<PaginaResultado<(Usuario Usuario, int QuantidadePedidos)>> PesquisarAsync(
         FiltroUsuarios filtro, CancellationToken ct = default)
     {
@@ -78,5 +87,11 @@ public sealed class RefreshTokenRepositorio(CafeDbContext contexto) : Repositori
         return Conjunto
             .Where(t => t.UsuarioId == usuarioId && t.RevogadoEm == null)
             .ExecuteUpdateAsync(s => s.SetProperty(t => t.RevogadoEm, agora), ct);
+    }
+
+    public Task RemoverExpiradosDoUsuarioAsync(int usuarioId, CancellationToken ct = default)
+    {
+        var agora = Relogio.Agora();
+        return Conjunto.Where(t => t.UsuarioId == usuarioId && t.ExpiraEm < agora).ExecuteDeleteAsync(ct);
     }
 }

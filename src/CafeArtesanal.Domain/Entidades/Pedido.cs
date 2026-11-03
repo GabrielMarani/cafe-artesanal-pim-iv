@@ -78,7 +78,8 @@ public class Pedido : Entidade
     public void AdicionarItem(Produto produto, int quantidade)
     {
         RegraNegocioException.Quando(!EhNova, "Não é possível alterar itens de um pedido já registrado.");
-        RegraNegocioException.Quando(!produto.Ativo, $"O produto \"{produto.Nome}\" não está disponível.");
+        RegraNegocioException.Quando(!produto.Ativo || produto.Categoria is { Ativo: false },
+            $"O produto \"{produto.Nome}\" não está disponível.");
 
         var existente = _itens.FirstOrDefault(i => i.ProdutoId == produto.Id);
         var quantidadeTotal = (existente?.Quantidade ?? 0) + quantidade;

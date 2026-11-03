@@ -18,13 +18,13 @@ public sealed record CategoriaDto(
 public sealed class SalvarCategoriaRequest
 {
     [Required(ErrorMessage = "Informe o nome da categoria.")]
-    [StringLength(50)]
+    [StringLength(50, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string Nome { get; init; } = string.Empty;
 
-    [StringLength(255)]
+    [StringLength(255, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Descricao { get; init; }
 
-    [Range(0, 999)]
+    [Range(0, 999, ErrorMessage = "Ordem de exibição inválida.")]
     public int OrdemExibicao { get; init; }
 
     public bool Ativo { get; init; } = true;
@@ -68,13 +68,13 @@ public sealed class FiltroProdutos : FiltroPaginado
 public sealed class SalvarProdutoRequest
 {
     [Required(ErrorMessage = "Informe o nome do produto.")]
-    [StringLength(100)]
+    [StringLength(100, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string Nome { get; init; } = string.Empty;
 
-    [StringLength(500)]
+    [StringLength(500, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Descricao { get; init; }
 
-    [StringLength(500)]
+    [StringLength(500, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? ImagemUrl { get; init; }
 
     [Range(0.01, 99999, ErrorMessage = "O preço deve ser maior que zero.")]
@@ -100,7 +100,7 @@ public sealed class AjustarEstoqueRequest
     public int Quantidade { get; init; }
 
     [Required(ErrorMessage = "Informe o motivo do ajuste.")]
-    [StringLength(255)]
+    [StringLength(255, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string Motivo { get; init; } = string.Empty;
 }
 

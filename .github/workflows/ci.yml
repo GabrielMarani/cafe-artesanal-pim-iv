@@ -1,6 +1,6 @@
 # Pipeline CI/CD do Café Artesanal
 #  - backend: compila e roda os testes automatizados (.NET 8)
-#  - banco:   executa o script SQL completo num MariaDB real e chama as procedures
+#  - banco:   executa o script SQL num MariaDB real, chama as procedures e roda os testes de integração
 #  - mobile:  análise estática, testes e build do APK do app Flutter
 #  - imagem:  gera a imagem Docker; na branch main publica no GitHub Container Registry (CD)
 
@@ -51,6 +51,13 @@ jobs:
             CALL sp_produtos_mais_vendidos(CURDATE() - INTERVAL 30 DAY, CURDATE(), 3);
             SELECT COUNT(*) AS triggers FROM information_schema.TRIGGERS WHERE TRIGGER_SCHEMA = 'bd_cafe_artesanal';
             SELECT * FROM vw_produtos_estoque_baixo;"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Testes de integração (API + banco real)
+        run: dotnet test tests/CafeArtesanal.IntegrationTests -c Release
+        env:
+          TESTE_DB_CONEXAO: "Server=127.0.0.1;Port=3306;User=root;Password=ci;CharSet=utf8mb4;"
 
   mobile:
     runs-on: ubuntu-latest

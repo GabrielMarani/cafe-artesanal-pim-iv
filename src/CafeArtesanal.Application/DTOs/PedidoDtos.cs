@@ -19,7 +19,7 @@ public sealed class CriarPedidoRequest
     /// <summary>Obrigatório quando TipoEntrega = entrega (endereço salvo do cliente).</summary>
     public int? EnderecoId { get; init; }
 
-    [StringLength(300)]
+    [StringLength(300, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Observacao { get; init; }
 }
 
@@ -39,13 +39,13 @@ public sealed class AlterarStatusPedidoRequest
     public string Status { get; init; } = string.Empty;
 
     /// <summary>Obrigatório ao cancelar.</summary>
-    [StringLength(255)]
+    [StringLength(255, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Motivo { get; init; }
 }
 
 public sealed class CancelarPedidoRequest
 {
-    [StringLength(255)]
+    [StringLength(255, ErrorMessage = "{0} deve ter no máximo {1} caracteres.")]
     public string? Motivo { get; init; }
 }
 

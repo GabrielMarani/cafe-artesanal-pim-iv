@@ -6,10 +6,11 @@ import '../api/cliente_api.dart';
 import '../api/modelos.dart';
 import '../api/servicos_api.dart';
 import '../core/formatos.dart';
+import '../core/tema.dart';
 import '../widgets/componentes.dart';
 
 /// Acompanhamento de um pedido: etapas, itens, linha do tempo e ações.
-/// O status é atualizado sozinho a cada 15 segundos (sincronização).
+/// O status é atualizado sozinho a cada 15 segundos até o pedido ser finalizado.
 class PedidoTela extends StatefulWidget {
   const PedidoTela({super.key, required this.pedidoId, this.recemCriado = false});
 
@@ -47,6 +48,7 @@ class _PedidoTelaState extends State<PedidoTela> {
         _pedido = pedido;
         _erro = null;
       });
+      if (pedido.status.finalizado) _timer?.cancel();
     } on ErroApi catch (e) {
       if (mounted) setState(() => _erro = e.mensagem);
     }
@@ -58,6 +60,7 @@ class _PedidoTelaState extends State<PedidoTela> {
       final atualizado = await acao();
       if (!mounted) return;
       setState(() => _pedido = atualizado);
+      if (atualizado.status.finalizado) _timer?.cancel();
       mostrarAviso(context, sucesso);
     } on ErroApi catch (e) {
       if (mounted) mostrarAviso(context, e.mensagem);
@@ -199,7 +202,7 @@ class _Etapas extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Row(children: [
               Icon(i <= atual ? Icons.check_circle : Icons.radio_button_unchecked,
-                  color: i <= atual ? const Color(0xFF2E6B30) : Theme.of(context).colorScheme.outlineVariant),
+                  color: i <= atual ? TemaCafe.sucesso(context) : Theme.of(context).colorScheme.outlineVariant),
               const SizedBox(width: 12),
               Text(etapa.rotulo, style: TextStyle(fontWeight: i == atual ? FontWeight.w800 : FontWeight.w400)),
             ]),

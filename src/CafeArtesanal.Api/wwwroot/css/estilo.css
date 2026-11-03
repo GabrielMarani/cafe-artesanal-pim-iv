@@ -118,7 +118,7 @@ body {
   flex-direction: column;
 }
 main { flex: 1; }
-h1, h2, h3, h4 { font-family: var(--fonte-titulo); line-height: 1.25; margin: 0 0 .5em; color: var(--texto); }
+h1, h2, h3 { font-family: var(--fonte-titulo); line-height: 1.25; margin: 0 0 .5em; color: var(--texto); }
 h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
 h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
 h3 { font-size: 1.15rem; }
@@ -135,12 +135,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
-.pular-conteudo {
-  position: absolute; left: 1rem; top: -100px; z-index: 1000;
-  background: var(--cor-primaria); color: var(--cor-sobre-primaria);
-  padding: .75rem 1rem; border-radius: var(--raio-p); font-weight: 600; text-decoration: none;
-}
-.pular-conteudo:focus { top: 1rem; }
 .texto-suave { color: var(--texto-suave); }
 .texto-centro { text-align: center; }
 .mt-1 { margin-top: .5rem; } .mt-2 { margin-top: 1rem; } .mt-3 { margin-top: 1.5rem; }
@@ -181,7 +175,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* ---------- Formulários ---------- */
 .campo { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
-.campo label, .legenda { font-weight: 600; font-size: .92rem; }
+.campo label { font-weight: 600; font-size: .92rem; }
 .campo .opcional { font-weight: 400; color: var(--texto-suave); }
 .campo input, .campo select, .campo textarea {
   width: 100%; min-height: 44px; padding: .6rem .85rem;
@@ -196,8 +190,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .ajuda { font-size: .85rem; color: var(--texto-suave); }
 .erro-campo { font-size: .85rem; color: var(--erro); font-weight: 600; }
 .grade-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 1rem; }
-.grupo-campo-botao { display: flex; gap: .5rem; }
-.grupo-campo-botao input { flex: 1; }
 fieldset { border: 1.5px solid var(--borda); border-radius: var(--raio); padding: 1rem; margin: 0 0 1rem; }
 legend { font-family: var(--fonte-titulo); font-weight: 600; padding: 0 .5rem; }
 .opcoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .6rem; }
@@ -303,6 +295,7 @@ legend { font-family: var(--fonte-titulo); font-weight: 600; padding: 0 .5rem; }
 /* ---------- Cartões ---------- */
 .cartao { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra-p); padding: 1.25rem; }
 .cartao h2, .cartao h3 { margin-top: 0; }
+.titulo-pedido { font-size: 1.15rem; }
 .passo { text-align: center; }
 .passo .icone-grande {
   width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%; display: grid; place-items: center;
@@ -351,7 +344,7 @@ legend { font-family: var(--fonte-titulo); font-weight: 600; padding: 0 .5rem; }
 /* ---------- Estados ---------- */
 .vazio { text-align: center; padding: 3rem 1rem; color: var(--texto-suave); }
 .vazio .icone { width: 56px; height: 56px; margin: 0 auto 1rem; opacity: .6; }
-.vazio h2, .vazio h3 { color: var(--texto); }
+.vazio h2 { color: var(--texto); font-size: 1.15rem; }
 .carregando { display: flex; flex-direction: column; align-items: center; gap: .75rem; padding: 3rem 1rem; color: var(--texto-suave); }
 .giratorio { width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--borda); border-top-color: var(--cor-primaria); animation: girar .8s linear infinite; }
 @keyframes girar { to { transform: rotate(360deg); } }
@@ -434,8 +427,8 @@ dialog.dialogo::backdrop { background: rgba(20, 12, 10, .6); }
 .cartao-pedido .meta { color: var(--texto-suave); font-size: .88rem; }
 .cartao-pedido .valor { font-family: var(--fonte-titulo); font-weight: 700; color: var(--cor-primaria); text-align: right; }
 .cartao-pedido .detalhes { padding: 0 1.25rem 1.25rem; border-top: 1px solid var(--borda); }
-.cartao-pedido[open] .seta { transform: rotate(180deg); }
-.seta { transition: transform var(--transicao); }
+.cartao-pedido summary .linha > .icone { transition: transform var(--transicao); }
+.cartao-pedido[open] summary .linha > .icone { transform: rotate(180deg); }
 .cartao-pedido.novo { border-color: var(--sucesso); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sucesso) 30%, transparent); }
 .itens-pedido { list-style: none; padding: 0; margin: 1rem 0; }
 .itens-pedido li { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-bottom: 1px dashed var(--borda); }

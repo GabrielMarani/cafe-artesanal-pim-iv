@@ -12,6 +12,7 @@ COPY src/CafeArtesanal.Application/CafeArtesanal.Application.csproj src/CafeArte
 COPY src/CafeArtesanal.Infrastructure/CafeArtesanal.Infrastructure.csproj src/CafeArtesanal.Infrastructure/
 COPY src/CafeArtesanal.Api/CafeArtesanal.Api.csproj src/CafeArtesanal.Api/
 COPY tests/CafeArtesanal.Tests/CafeArtesanal.Tests.csproj tests/CafeArtesanal.Tests/
+COPY tests/CafeArtesanal.IntegrationTests/CafeArtesanal.IntegrationTests.csproj tests/CafeArtesanal.IntegrationTests/
 RUN dotnet restore CafeArtesanal.sln
 
 COPY database/ database/

@@ -41,14 +41,14 @@ async function carregarProdutos() {
   const numero = ++requisicaoAtual; // ignora respostas antigas se a pessoa digitar rápido
   elProdutos.setAttribute('aria-busy', 'true');
   try {
-    const pagina = await api.produtos.pesquisar({ ...filtro, tamanhoPagina: 100 });
+    const lista = await api.produtos.todos(filtro);
     if (numero !== requisicaoAtual) return;
-    produtos = pagina.itens;
+    produtos = lista;
 
     renderizar(elProdutos, produtos.length
       ? html`${produtos.map((p) => cartaoProduto(p, { podeComprar: !sessao.ehEquipe() }))}`
       : estadoVazio({ icone: 'busca', titulo: 'Nenhum produto encontrado', texto: 'Tente outra palavra ou escolha outra categoria.' }));
-    elResumo.textContent = `${pagina.totalItens} produto(s) encontrado(s).`;
+    elResumo.textContent = `${produtos.length} produto(s) encontrado(s).`;
   } catch (erro) {
     if (numero === requisicaoAtual) renderizar(elProdutos, estadoErro(erro));
   } finally {
