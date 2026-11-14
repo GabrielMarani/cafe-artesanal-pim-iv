@@ -7,12 +7,11 @@ import { preferencias } from './acessibilidade.js';
 import { sessao, exigirLogin } from './sessao.js';
 import { $, aviso, anunciar, cru, html, icone, renderizar } from './ui.js';
 
-export const LOGO = cru(`<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-  <circle cx="20" cy="20" r="18" fill="#4B2E2B"/>
-  <path d="M20 10C15 10 12 12 12 15V18C12 21 15 23 20 23C25 23 28 21 28 18V15C28 12 25 10 20 10Z" fill="#F5E6D3"/>
-  <ellipse cx="20" cy="25" rx="6" ry="2" fill="#C27B40"/>
-  <path d="M14 25V28C14 29 16 30 20 30C24 30 26 29 26 28V25" stroke="#F5E6D3" stroke-width="1.5" fill="none"/>
-</svg>`);
+const MARCA = html`<a class="marca" href="index.html" aria-label="Café Artesanal - página inicial">
+  <img class="marca-clara" src="img/marca-clara.webp" width="1200" height="279" alt="">
+  <img class="marca-escura" src="img/marca-escura.webp" width="1200" height="279" alt="">
+  <span class="marca-texto" aria-hidden="true">Café Artesanal</span>
+</a>`;
 
 const PAGINA_ATUAL = location.pathname.split('/').pop() || 'index.html';
 
@@ -102,7 +101,7 @@ function montarTopo() {
   const quantidade = carrinho.quantidadeTotal();
 
   renderizar(topo, html`<div class="container">
-    <a class="marca" href="index.html" aria-label="Café Artesanal - página inicial">${LOGO}<span>Café Artesanal</span></a>
+    ${MARCA}
     <button type="button" class="botao botao-texto botao-icone botao-menu" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">${icone('menu')}</button>
     <nav aria-label="Menu principal">
       <ul class="menu" id="menu-principal">
@@ -156,7 +155,7 @@ async function montarRodape() {
   const desenhar = (loja) => renderizar(rodape, html`<div class="container">
     <div class="grade-rodape">
       <div>
-        <a class="marca" href="index.html" style="color:inherit">${LOGO}<span>Café Artesanal</span></a>
+        ${MARCA}
         <p class="mt-1">Cafés especiais, torra artesanal e atendimento para todas as pessoas.</p>
       </div>
       <div>

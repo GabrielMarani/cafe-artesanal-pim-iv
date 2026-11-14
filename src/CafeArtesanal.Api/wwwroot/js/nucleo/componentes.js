@@ -3,27 +3,27 @@
 import { etapasDoPedido, formatarData, formatarMoeda, rotulosStatus } from './formatos.js';
 import { IMAGEM_PADRAO, html, icone } from './ui.js';
 
-/** Cartão de produto do cardápio. */
-export function cartaoProduto(p, { podeComprar = true } = {}) {
+/** Cartão de produto no cardápio e na vitrine da página inicial. */
+export function cartaoProduto(p, { podeComprar = true, vitrine = false } = {}) {
   const ultimas = p.disponivel && p.estoque <= 5;
-  return html`<article class="cartao-produto" aria-labelledby="produto-${p.id}">
+  return html`<article class="cartao-produto${vitrine ? ' cartao-produto-vitrine' : ''}" aria-labelledby="produto-${p.id}">
     <div class="imagem">
       <img src="${p.imagemUrl || IMAGEM_PADRAO}" alt="${p.nome}" loading="lazy" width="400" height="300">
       <div class="selos">
-        ${p.destaque ? html`<span class="selo selo-destaque">${icone('estrela')} Destaque</span>` : ''}
+        ${p.destaque ? html`<span class="selo selo-destaque">Destaque</span>` : ''}
         ${!p.disponivel ? html`<span class="selo selo-erro">Esgotado</span>` : ''}
         ${ultimas ? html`<span class="selo selo-alerta">Últimas ${p.estoque} unidades</span>` : ''}
       </div>
     </div>
     <div class="corpo">
-      <span class="categoria">${p.categoriaNome ?? 'Outros'}</span>
+      ${vitrine ? '' : html`<span class="categoria">${p.categoriaNome ?? 'Outros'}</span>`}
       <h3 id="produto-${p.id}">${p.nome}</h3>
       <p class="descricao">${p.descricao ?? ''}</p>
       <div class="rodape-produto">
         <span class="preco">${formatarMoeda(p.preco)}</span>
-        ${podeComprar ? html`<button type="button" class="botao botao-primario botao-pequeno" data-acao="adicionar" data-id="${p.id}"
+        ${podeComprar ? html`<button type="button" class="botao botao-primario ${vitrine ? 'botao-adicionar-vitrine' : 'botao-pequeno'}" data-acao="adicionar" data-id="${p.id}"
             ${p.disponivel ? '' : 'disabled'} aria-label="Adicionar ${p.nome} ao carrinho">
-            ${icone('mais')} Adicionar</button>` : ''}
+            ${icone('mais')}${vitrine ? '' : ' Adicionar'}</button>` : ''}
       </div>
     </div>
   </article>`;

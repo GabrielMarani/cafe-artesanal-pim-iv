@@ -6,10 +6,10 @@
   <title>Café Artesanal | Cafés especiais com entrega</title>
   <meta name="description" content="Cafés especiais, torra artesanal e pedidos online com entrega ou retirada.">
   <meta name="theme-color" content="#4B2E2B">
-  <link rel="icon" href="img/icone.svg" type="image/svg+xml">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;family=Playfair+Display:wght@700&amp;family=Poppins:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="css/estilo.css">
   <script src="js/tema-inicial.js"></script>
   <script type="module" src="js/paginas/inicio.js"></script>
@@ -27,62 +27,98 @@
       </div>
     </section>
 
-    <section class="secao" aria-labelledby="titulo-destaques">
+    <section class="secao" data-entrada aria-labelledby="titulo-destaques">
       <div class="container">
         <header class="cabecalho-secao">
-          <span class="etiqueta">Destaques</span>
+          <span class="marca-secao" data-marca-secao aria-hidden="true"></span>
           <h2 id="titulo-destaques">Os favoritos da casa</h2>
           <p class="texto-suave">Seleção especial preparada pelos nossos baristas.</p>
         </header>
-        <div class="grade-produtos" id="destaques" aria-live="polite">
-          <div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div>
+        <div class="vitrine vitrine-destaques" data-vitrine>
+          <div class="vitrine-controles" hidden>
+            <button class="botao vitrine-seta" type="button" data-deslocamento="-1" aria-label="Destaques anteriores" aria-controls="destaques"></button>
+            <button class="botao vitrine-seta" type="button" data-deslocamento="1" aria-label="Próximos destaques" aria-controls="destaques"></button>
+          </div>
+          <div class="vitrine-faixa" id="destaques" role="group" aria-label="Produtos em destaque" aria-live="polite" aria-busy="true">
+            <div class="esqueleto" aria-hidden="true"></div><div class="esqueleto" aria-hidden="true"></div><div class="esqueleto" aria-hidden="true"></div>
+          </div>
         </div>
-        <p class="texto-centro mt-3"><a class="botao" href="cardapio.html">Ver todos os produtos</a></p>
       </div>
     </section>
 
-    <section class="secao secao-alt" aria-labelledby="titulo-como">
+    <section class="secao secao-alt secao-catalogo" data-entrada aria-labelledby="titulo-produtos">
       <div class="container">
         <header class="cabecalho-secao">
-          <span class="etiqueta">Simples assim</span>
-          <h2 id="titulo-como">Como pedir</h2>
+          <span class="marca-secao" data-marca-secao aria-hidden="true"></span>
+          <h2 id="titulo-produtos">Explore o cardápio</h2>
+          <p class="texto-suave">Conheça outras opções do nosso cardápio.</p>
         </header>
-        <ol class="grade-3" style="list-style:none;padding:0;margin:0">
-          <li class="cartao passo">
-            <div class="icone-grande" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-            <h3>1. Escolha</h3>
-            <p class="texto-suave mb-0">Navegue pelo cardápio no site ou no app e monte seu pedido.</p>
+        <div class="vitrine vitrine-produtos" data-vitrine>
+          <div class="vitrine-faixa" id="produtos-da-casa" role="group" aria-label="Mais produtos do cardápio" aria-live="polite" aria-busy="true">
+            <div class="esqueleto" aria-hidden="true"></div><div class="esqueleto" aria-hidden="true"></div><div class="esqueleto" aria-hidden="true"></div><div class="esqueleto" aria-hidden="true"></div>
+          </div>
+        </div>
+        <p class="texto-centro vitrine-chamada"><a class="botao botao-primario vitrine-cta" href="cardapio.html">VER TODOS OS PRODUTOS</a></p>
+      </div>
+    </section>
+
+    <section class="secao" data-entrada aria-labelledby="titulo-como">
+      <div class="container">
+        <header class="cabecalho-secao">
+          <span class="marca-secao" data-marca-secao aria-hidden="true"></span>
+          <h2 id="titulo-como">Como pedir</h2>
+          <p class="texto-suave">Peça pelo site ou pelo app para retirar no balcão ou receber no seu endereço.</p>
+        </header>
+        <ol class="passos-pedido" role="list">
+          <li class="passo">
+            <span class="passo-numero" aria-hidden="true">1</span>
+            <div>
+              <h3>Monte seu carrinho</h3>
+              <p class="texto-suave">Adicione os produtos do cardápio. No carrinho, confira os itens e ajuste as quantidades.</p>
+              <a href="cardapio.html">Abrir cardápio</a>
+            </div>
           </li>
-          <li class="cartao passo">
-            <div class="icone-grande" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-            <h3>2. Entrega ou retirada</h3>
-            <p class="texto-suave mb-0">Receba no seu endereço ou retire no balcão sem pagar taxa.</p>
+          <li class="passo">
+            <span class="passo-numero" aria-hidden="true">2</span>
+            <div>
+              <h3>Finalize o pedido</h3>
+              <p class="texto-suave">Entre na sua conta. Escolha retirada ou entrega e selecione a forma de pagamento. Você paga ao receber ou retirar.</p>
+              <a href="carrinho.html">Ver carrinho</a>
+            </div>
           </li>
-          <li class="cartao passo">
-            <div class="icone-grande" aria-hidden="true"><svg class="icone" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
-            <h3>3. Acompanhe</h3>
-            <p class="texto-suave mb-0">Veja cada etapa do pedido em tempo real, do preparo até a entrega.</p>
+          <li class="passo">
+            <span class="passo-numero" aria-hidden="true">3</span>
+            <div>
+              <h3>Acompanhe seu pedido</h3>
+              <p class="texto-suave">Veja o andamento em Meus pedidos e confirme o recebimento depois de retirar ou receber os itens.</p>
+              <a href="pedidos.html">Ver meus pedidos</a>
+            </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <section class="secao" aria-labelledby="titulo-sobre">
-      <div class="container grade-2" style="align-items:center">
-        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=70" alt="Barista preparando café em uma cafeteria aconchegante" loading="lazy" style="border-radius:var(--raio-g);aspect-ratio:4/3;object-fit:cover">
-        <div>
-          <span class="etiqueta">Nossa história</span>
+    <section class="secao secao-alt" data-entrada aria-labelledby="titulo-sobre">
+      <div class="container">
+        <header class="cabecalho-secao">
+          <span class="marca-secao" data-marca-secao aria-hidden="true"></span>
           <h2 id="titulo-sobre">Paixão por café de qualidade</h2>
-          <p>Nascemos em 2020 com a missão de conectar pessoas através do café. Cada grão é selecionado de pequenos produtores e torrado artesanalmente para garantir o melhor sabor e aroma.</p>
-          <p>Com a transformação digital, levamos a mesma experiência do balcão para o site e para o aplicativo — com pedidos rápidos, acompanhamento em tempo real e atendimento acessível.</p>
+          <p class="texto-suave">Grãos de pequenos produtores e torra artesanal.</p>
+        </header>
+        <div class="grade-2 historia">
+          <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=70" alt="Barista preparando café em uma cafeteria aconchegante" loading="lazy">
+          <div>
+            <p>Nascemos em 2020 com a missão de conectar pessoas pelo café. Selecionamos os grãos e cuidamos da torra para preservar seu sabor e aroma.</p>
+            <p>Hoje, a experiência do balcão também está no site e no app, com pedidos que você pode acompanhar e atendimento acessível.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="secao secao-alt" id="inclusao" aria-labelledby="titulo-inclusao">
+    <section class="secao" id="inclusao" data-entrada aria-labelledby="titulo-inclusao">
       <div class="container">
         <header class="cabecalho-secao">
-          <span class="etiqueta">Responsabilidade social</span>
+          <span class="marca-secao" data-marca-secao aria-hidden="true"></span>
           <h2 id="titulo-inclusao">Um café para todas as pessoas</h2>
           <p class="texto-suave">Acreditamos que tecnologia deve incluir. Por isso, o sistema foi pensado para respeitar a diversidade e ser usado por qualquer pessoa.</p>
         </header>

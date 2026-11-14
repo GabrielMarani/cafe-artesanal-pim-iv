@@ -91,13 +91,7 @@ elProdutos.addEventListener('click', (e) => {
   const produto = produtos.find((p) => p.id === Number(botao.dataset.id));
   if (!produto) return;
 
-  const noCarrinho = carrinho.itens().find((i) => i.produtoId === produto.id)?.quantidade ?? 0;
-  if (noCarrinho >= produto.estoque) {
-    aviso.info(`Você já adicionou todo o estoque disponível de ${produto.nome}.`);
-    return;
-  }
-  carrinho.adicionar(produto);
-  aviso.sucesso(`${produto.nome} adicionado ao carrinho.`);
+  aviso.carrinho(produto.nome, botao, carrinho.adicionar(produto));
 });
 
 carregarCategorias();

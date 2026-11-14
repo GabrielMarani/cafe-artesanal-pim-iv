@@ -66,7 +66,7 @@ function desenhar(area) {
     </tr></thead>
     <tbody>${produtos.map((p) => html`<tr data-id="${p.id}" class="${p.ativo ? '' : 'inativo'}">
       <td><img class="miniatura" src="${p.imagemUrl || IMAGEM_PADRAO}" alt="" loading="lazy"></td>
-      <td><strong>${p.nome}</strong> ${p.destaque ? html`<span class="selo selo-destaque">${icone('estrela')} Destaque</span>` : ''}</td>
+      <td><strong>${p.nome}</strong> ${p.destaque ? html`<span class="selo selo-destaque">Destaque</span>` : ''}</td>
       <td>${p.categoriaNome ?? '—'}</td>
       <td class="numero-col">${formatarMoeda(p.preco)}</td>
       <td class="numero-col"><span class="selo ${p.estoque === 0 ? 'selo-erro' : p.estoqueBaixo ? 'selo-alerta' : ''}">${p.estoque}</span>

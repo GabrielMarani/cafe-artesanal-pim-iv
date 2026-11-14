@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Requisitos – Café Artesanal (PIM IV)</title>
+<style>
+  @page { size: A4; margin: 3cm 2cm 2cm 3cm; }
+  @page :first { margin-top: 3cm; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 12pt; line-height: 1.5; color: #000; margin: 0; }
+  h1 { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 0 0 12pt; page-break-after: avoid; }
+  h2 { font-size: 12pt; font-weight: bold; margin: 18pt 0 6pt; page-break-after: avoid; }
+  p { text-align: justify; text-indent: 1.25cm; margin: 0 0 6pt; }
+  p.sem-recuo { text-indent: 0; }
+  ul { margin: 0 0 6pt 1.25cm; padding-left: .5cm; }
+  li { text-align: justify; }
+
+  .capa { height: 24.5cm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; page-break-after: always; }
+  .capa p { text-align: center; text-indent: 0; margin: 0; }
+  .capa .titulo { font-weight: bold; font-size: 14pt; margin-top: 7cm; }
+  .capa .subtitulo { margin-top: 12pt; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 10pt; line-height: 1.3; margin: 6pt 0 4pt; page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  tr.nova-pagina { break-before: page; }
+  p.antes-tabela { break-after: avoid; }
+  thead { display: table-header-group; }
+  th, td { border: 1px solid #000; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+  td:last-child { text-align: justify; }
+  th.titulo-tabela { background: #000; color: #fff; text-align: center; font-size: 10.5pt; }
+  th.secao { background: #e6e6e6; text-align: left; font-weight: bold; }
+  thead tr:last-child th { background: #ccc; text-align: center; }
+  td.codigo, td.centro { text-align: center; white-space: nowrap; }
+  td.nome { font-weight: bold; text-align: left; }
+  .legenda { font-size: 10pt; text-align: center; text-indent: 0; margin: 2pt 0 0; }
+  .fonte { font-size: 10pt; text-indent: 0; margin: 0 0 12pt; }
+  .quebra { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1>Requisitos funcionais</h1>
+
+<table>
+  <thead>
+    <tr><th class="titulo-tabela" colspan="3">LEVANTAMENTO DE REQUISITOS<br>Requisitos funcionais</th></tr>
+    <tr><th style="width:9%">Código</th><th style="width:24%">Requisito</th><th>Descrição</th></tr>
+  </thead>
+  <tbody>
+    <tr><th class="secao" colspan="3">Acesso e conta</th></tr>
+    <tr><td class="codigo">RF01</td><td class="nome">Efetuar login</td><td>O sistema deve permitir que o usuário entre com CPF ou e-mail e senha. Se os dados estiverem corretos e a conta estiver ativa, o sistema abre a sessão de acordo com o perfil (cliente, atendente ou administrador). Em caso de erro, deve informar que as credenciais são inválidas, sem dizer qual dado está errado.</td></tr>
+    <tr><td class="codigo">RF02</td><td class="nome">Permitir acesso sem login</td><td>O sistema deve permitir que o visitante consulte o cardápio e monte o carrinho sem estar logado. O login só deve ser exigido para finalizar o pedido.</td></tr>
+    <tr><td class="codigo">RF03</td><td class="nome">Manter cliente</td><td>O sistema deve permitir que o cliente crie sua conta informando nome completo, nome social (opcional), CPF, e-mail (opcional), celular (opcional) e senha.</td></tr>
+    <tr><td class="codigo">RF04</td><td class="nome">Editar dados pessoais</td><td>O sistema deve permitir que o cliente altere nome, nome social, e-mail e celular. O CPF identifica a conta e não pode ser alterado.</td></tr>
+    <tr><td class="codigo">RF05</td><td class="nome">Alterar senha</td><td>O sistema deve permitir a troca de senha mediante a senha atual. Após a troca, as sessões abertas em outros aparelhos devem ser encerradas.</td></tr>
+    <tr><td class="codigo">RF06</td><td class="nome">Manter endereços</td><td>O sistema deve permitir que o cliente cadastre, edite, remova e defina um endereço principal. Ao digitar o CEP, o sistema deve preencher rua, bairro, cidade e UF automaticamente (serviço ViaCEP).</td></tr>
+    <tr><td class="codigo">RF07</td><td class="nome">Desconectar conta</td><td>O sistema deve permitir que o usuário saia da conta, encerrando a sessão no aparelho e no servidor.</td></tr>
+
+    <tr><th class="secao" colspan="3">Cardápio</th></tr>
+    <tr><td class="codigo">RF08</td><td class="nome">Consultar produtos</td><td>O sistema deve mostrar os produtos ativos com imagem, nome, descrição, preço e disponibilidade, indicando produtos em destaque, esgotados e com poucas unidades.</td></tr>
+    <tr><td class="codigo">RF09</td><td class="nome">Consultar categoria</td><td>O sistema deve permitir filtrar os produtos por categoria, destacando visualmente a categoria selecionada.</td></tr>
+    <tr><td class="codigo">RF10</td><td class="nome">Buscar e ordenar produtos</td><td>O sistema deve permitir buscar produtos pelo nome, descrição ou categoria, sem diferenciar maiúsculas e acentos, e ordenar por categoria, nome ou preço.</td></tr>
+
+    <tr><th class="secao" colspan="3">Pedidos do cliente</th></tr>
+    <tr><td class="codigo">RF11</td><td class="nome">Escolher quantidade de itens</td><td>O sistema deve permitir adicionar produtos ao carrinho, alterar a quantidade, remover itens e esvaziar o carrinho. A quantidade deve respeitar o estoque disponível.</td></tr>
+    <tr><td class="codigo">RF12</td><td class="nome">Listar produtos selecionados</td><td>O sistema deve listar os itens do carrinho com quantidade, valor unitário e subtotal, além da taxa de entrega e do total. Ao abrir o carrinho, preços e estoque devem ser conferidos com os dados atuais, avisando sobre itens que ficaram indisponíveis.</td></tr>
+    <tr><td class="codigo">RF13</td><td class="nome">Realizar pedido</td><td>O sistema deve permitir que o cliente finalize o pedido escolhendo retirada no balcão ou entrega em um endereço cadastrado, a forma de pagamento (Pix, cartão de crédito, cartão de débito ou dinheiro) e uma observação opcional. Os valores devem ser calculados pelo servidor.</td></tr>
+    <tr><td class="codigo">RF14</td><td class="nome">Listar pedidos realizados</td><td>O sistema deve mostrar os pedidos do cliente com número, data, itens, quantidades, valores, forma de pagamento, endereço e status. Cada pedido deve exibir as etapas e a linha do tempo, atualizadas automaticamente enquanto o pedido estiver em andamento.</td></tr>
+    <tr><td class="codigo">RF15</td><td class="nome">Cancelar pedido pelo cliente</td><td>O sistema deve permitir que o cliente cancele o próprio pedido enquanto ele ainda não começou a ser preparado, informando um motivo opcional.</td></tr>
+    <tr><td class="codigo">RF16</td><td class="nome">Confirmar recebimento</td><td>O sistema deve permitir que o cliente confirme que recebeu o pedido (entrega) ou que o retirou no balcão, finalizando-o.</td></tr>
+
+    <tr><th class="secao" colspan="3">Atendimento (atendente e administrador)</th></tr>
+    <tr><td class="codigo">RF17</td><td class="nome">Listar pedidos recebidos</td><td>O sistema deve listar os pedidos para a equipe, com filtro por status e busca por número ou nome do cliente. Cada pedido deve mostrar cliente, telefone, itens, valores, tipo de entrega, endereço, pagamento e observação. A lista deve se atualizar sozinha e avisar quando chegarem pedidos novos.</td></tr>
+    <tr><td class="codigo">RF18</td><td class="nome">Atualizar status do pedido</td><td>O sistema deve permitir que a equipe avance o pedido pelas etapas: pendente, em preparo, pronto, saiu para entrega e entregue. Pedidos para retirada passam de “pronto” direto para “entregue”.</td></tr>
+    <tr><td class="codigo">RF19</td><td class="nome">Cancelar pedido pela equipe</td><td>O sistema deve permitir que a equipe cancele um pedido informando obrigatoriamente o motivo, que fica visível para o cliente.</td></tr>
+    <tr><td class="codigo">RF20</td><td class="nome">Listar histórico geral</td><td>O sistema deve permitir que a equipe consulte todos os pedidos, inclusive os entregues e cancelados, com a linha do tempo de cada um (quem alterou e quando).</td></tr>
+
+    <tr><th class="secao" colspan="3">Administração</th></tr>
+    <tr><td class="codigo">RF21</td><td class="nome">Cadastrar produto</td><td>O sistema deve permitir que o administrador cadastre, edite e desative produtos, informando nome, descrição, preço, categoria, imagem, estoque inicial, estoque mínimo e destaque.</td></tr>
+    <tr><td class="codigo">RF22</td><td class="nome">Controlar estoque</td><td>O sistema deve permitir registrar entradas e saídas de estoque com motivo. O estoque deve baixar automaticamente quando um pedido é feito e voltar quando ele é cancelado, com alerta para produtos abaixo do estoque mínimo.</td></tr>
+    <tr><td class="codigo">RF23</td><td class="nome">Cadastrar categoria</td><td>O sistema deve permitir que o administrador cadastre, edite, ordene, desative e exclua categorias. A exclusão só é permitida para categorias sem produtos.</td></tr>
+    <tr><td class="codigo">RF24</td><td class="nome">Gerenciar usuários</td><td>O sistema deve permitir que o administrador liste e busque usuários, altere o perfil (cliente, atendente ou administrador) e ative ou desative contas. As mudanças devem valer imediatamente.</td></tr>
+    <tr><td class="codigo">RF25</td><td class="nome">Visualizar indicadores</td><td>O sistema deve exibir um painel por período (7, 30 ou 90 dias ou datas escolhidas) com faturamento, total de pedidos, ticket médio, cancelamentos, clientes atendidos, novos clientes, vendas por dia, produtos mais vendidos, pedidos por status e estoque baixo, permitindo exportar os dados em CSV.</td></tr>
+
+    <tr><th class="secao" colspan="3">Aplicativo e acessibilidade</th></tr>
+    <tr><td class="codigo">RF26</td><td class="nome">Usar o aplicativo móvel</td><td>O sistema deve oferecer um aplicativo para Android com cardápio, carrinho, finalização do pedido, acompanhamento dos pedidos e área da conta, usando a mesma API do site.</td></tr>
+    <tr><td class="codigo">RF27</td><td class="nome">Consultar cardápio sem conexão</td><td>O aplicativo deve guardar o cardápio no aparelho e sincronizar apenas o que mudou desde a última atualização, permitindo consultar os produtos sem internet e avisando quando estiver desconectado.</td></tr>
+    <tr><td class="codigo">RF28</td><td class="nome">Ajustar acessibilidade</td><td>O site deve permitir aumentar e diminuir a fonte, ativar alto contraste e tema escuro, e traduzir o conteúdo para Libras (VLibras). As preferências devem ficar salvas no navegador.</td></tr>
+  </tbody>
+</table>
+<p class="fonte">Fonte: Dos autores, 2026.</p>
+
+<h1>Requisitos não funcionais</h1>
+
+<table>
+  <thead>
+    <tr><th class="titulo-tabela" colspan="4">REQUISITOS NÃO FUNCIONAIS</th></tr>
+    <tr><th style="width:9%">Código</th><th style="width:16%">Tipo</th><th style="width:20%">Requisito</th><th>Descrição</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="codigo">RNF01</td><td>Desempenho</td><td class="nome">Tempo de resposta</td><td>O sistema deve responder às ações do usuário em até 2 segundos, mesmo com vários acessos simultâneos. Para isso, as listas são paginadas, as consultas usam índices no banco e as respostas são compactadas.</td></tr>
+    <tr><td class="codigo">RNF02</td><td>Usabilidade</td><td class="nome">Uso</td><td>A interface deve ser intuitiva, com mensagens claras em português, confirmação antes de ações que não podem ser desfeitas e indicação de carregamento.</td></tr>
+    <tr><td class="codigo">RNF03</td><td>Responsividade</td><td class="nome">Adaptação</td><td>O site deve se adaptar a celulares, tablets e computadores sem rolagem horizontal. O aplicativo deve respeitar o tamanho de fonte e o modo escuro do celular.</td></tr>
+    <tr><td class="codigo">RNF04</td><td>Confiabilidade</td><td class="nome">Integridade de informações</td><td>Os pedidos devem ser gravados em transação, com preços e totais calculados pelo servidor. O estoque deve ser controlado por triggers e procedures do banco, e alterações simultâneas no mesmo pedido devem ser detectadas para que uma não sobrescreva a outra.</td></tr>
+    <tr><td class="codigo">RNF05</td><td>Escalabilidade</td><td class="nome">Aumento de uso</td><td>A API não deve guardar estado de sessão no servidor (autenticação por token), permitindo executar várias instâncias. O sistema deve poder ser implantado em containers Docker.</td></tr>
+    <tr><td class="codigo">RNF06</td><td>Acessibilidade</td><td class="nome">Inclusão e acessibilidade</td><td>O site deve seguir as diretrizes WCAG 2.1 nível AA: contraste mínimo, navegação completa pelo teclado com foco visível, títulos em ordem, rótulos em todos os campos, avisos falados para leitores de tela e respeito à preferência de movimento reduzido. O aplicativo deve ter rótulos para o TalkBack.</td></tr>
+    <tr><td class="codigo">RNF07</td><td>Compatibilidade</td><td class="nome">Navegadores e dispositivos</td><td>O site deve funcionar nos principais navegadores atuais (Chrome, Edge, Firefox e Opera) e o aplicativo no Android. A API deve usar REST e JSON, para atender o site e o aplicativo.</td></tr>
+    <tr><td class="codigo">RNF08</td><td>Usabilidade</td><td class="nome">Aprendizado do usuário</td><td>O usuário deve conseguir fazer um pedido em poucos minutos, sem treinamento. A equipe deve conseguir atender um pedido com um clique por etapa.</td></tr>
+    <tr><td class="codigo">RNF09</td><td>Segurança</td><td class="nome">Autenticação e autorização</td><td>O acesso deve usar token JWT válido por 60 minutos, renovado por refresh token de 14 dias que só pode ser usado uma vez. Cada função deve exigir o perfil adequado (cliente, atendente ou administrador), e a desativação da conta deve valer imediatamente.</td></tr>
+    <tr><td class="codigo">RNF10</td><td>Segurança</td><td class="nome">Proteção de dados</td><td>As senhas devem ser guardadas com PBKDF2 (100 mil iterações e sal aleatório). O sistema deve limitar as tentativas de login, proteger contra injeção de código (XSS e SQL injection), enviar cabeçalhos de segurança e não exibir detalhes internos em mensagens de erro.</td></tr>
+    <tr><td class="codigo">RNF11</td><td>Legal</td><td class="nome">Privacidade (LGPD)</td><td>O sistema deve coletar apenas os dados necessários para o pedido, informando a finalidade no cadastro. Cada cliente só deve ter acesso aos próprios pedidos e endereços. No aplicativo, os tokens devem ficar no armazenamento seguro do aparelho.</td></tr>
+    <tr><td class="codigo">RNF12</td><td>Inclusão</td><td class="nome">Nome social</td><td>Quando informado, o nome social deve ser usado em todas as telas e no atendimento, no lugar do nome de registro.</td></tr>
+    <tr><td class="codigo">RNF13</td><td>Disponibilidade</td><td class="nome">Funcionamento sem internet</td><td>O aplicativo deve continuar exibindo o cardápio e o carrinho sem conexão. Uma queda de internet não deve encerrar a sessão do usuário.</td></tr>
+    <tr><td class="codigo">RNF14</td><td>Rastreabilidade</td><td class="nome">Histórico e auditoria</td><td>O sistema deve registrar automaticamente o histórico de status de cada pedido, as movimentações de estoque e as alterações de preço, com data. O histórico de status e as movimentações de estoque também registram o responsável.</td></tr>
+    <tr><td class="codigo">RNF15</td><td>Manutenibilidade</td><td class="nome">Organização e testes</td><td>O código deve ser organizado em camadas (Domínio, Aplicação, Infraestrutura e API) e ter testes automatizados de unidade, de integração com o banco e do aplicativo, executados em um pipeline de integração contínua.</td></tr>
+    <tr><td class="codigo">RNF16</td><td>Operação</td><td class="nome">Monitoramento</td><td>A API deve oferecer um endereço de verificação de saúde (/health) que informe se o banco de dados está acessível, e uma documentação interativa (Swagger) no ambiente de desenvolvimento.</td></tr>
+  </tbody>
+</table>
+<p class="fonte">Fonte: Dos autores, 2026.</p>
+
+
+</body>
+</html>

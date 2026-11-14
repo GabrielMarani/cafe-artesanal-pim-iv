@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Diagramas – Café Artesanal (PIM IV)</title>
+<style>
+  @page { size: A4 landscape; margin: 2cm; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 12pt; color: #000; margin: 0; }
+  figure { margin: 0; height: 17cm; display: flex; flex-direction: column; align-items: center;
+           justify-content: center; page-break-after: always; break-inside: avoid; }
+  figure:last-child { page-break-after: auto; }
+  figcaption { font-size: 10pt; text-align: center; margin-bottom: 6pt; }
+  img { display: block; max-width: 100%; max-height: 15cm; }
+  .fonte { font-size: 10pt; margin-top: 4pt; align-self: center; }
+  /* Código SQL: páginas em retrato, para o texto ficar legível */
+  @page retrato { size: A4 portrait; margin: 2cm; }
+  figure.retrato { page: retrato; height: 25.6cm; }
+  figure.retrato img { max-height: 23.5cm; max-width: 17cm; }
+</style>
+</head>
+<body>
+
+<figure>
+  <figcaption>Figura 1: Diagrama de caso de uso do sistema Café Artesanal</figcaption>
+  <img src="../diagramas/diagrama_caso_de_uso.svg" alt="Diagrama de caso de uso">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+<figure>
+  <figcaption>Figura 2: Modelo lógico do banco de dados do sistema Café Artesanal</figcaption>
+  <img src="../diagramas/modelo_logico.svg" alt="Modelo lógico do banco de dados">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+<figure>
+  <figcaption>Figura 3: Modelo físico do banco de dados do sistema Café Artesanal (MariaDB)</figcaption>
+  <img src="../diagramas/modelo_fisico.svg" alt="Modelo físico do banco de dados">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+<figure class="retrato">
+  <figcaption>Figura 4: Modelo físico em SQL – criação do banco e das tabelas de categorias, produtos e histórico de preços</figcaption>
+  <img src="../diagramas/modelo_fisico_sql_1.svg" alt="Script SQL, parte 1">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+<figure class="retrato">
+  <figcaption>Figura 5: Modelo físico em SQL – tabelas de usuários e endereços</figcaption>
+  <img src="../diagramas/modelo_fisico_sql_2.svg" alt="Script SQL, parte 2">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+<figure class="retrato">
+  <figcaption>Figura 6: Modelo físico em SQL – tabelas de pedidos e itens do pedido</figcaption>
+  <img src="../diagramas/modelo_fisico_sql_3.svg" alt="Script SQL, parte 3">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+<figure class="retrato">
+  <figcaption>Figura 7: Modelo físico em SQL – histórico de status, movimentação de estoque e tokens de sessão</figcaption>
+  <img src="../diagramas/modelo_fisico_sql_4.svg" alt="Script SQL, parte 4">
+  <div class="fonte">Fonte: Dos autores, 2026.</div>
+</figure>
+
+</body>
+</html>

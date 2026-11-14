@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="760" viewBox="0 0 1100 760">
+<rect width="100%" height="100%" fill="#fff"/>
+<rect x="200" y="30" width="700" height="700" fill="none" stroke="#000" stroke-width="1.5"/>
+<text x="550.0" y="52.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000">Sistema Café Artesanal</text>
+<line x1="113" y1="270" x2="268.0" y2="100.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="270" x2="268.0" y2="160.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="270" x2="268.0" y2="220.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="270" x2="512.0" y2="285.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="505" x2="268.0" y2="340.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="505" x2="268.0" y2="400.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="505" x2="268.0" y2="460.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="505" x2="268.0" y2="520.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="505" x2="268.0" y2="580.0" stroke="#000" stroke-width="1"/>
+<line x1="113" y1="505" x2="268.0" y2="640.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="225" x2="885.0" y2="110.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="225" x2="885.0" y2="170.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="225" x2="885.0" y2="225.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="225" x2="885.0" y2="350.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="225" x2="668.0" y2="285.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="555" x2="885.0" y2="445.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="555" x2="885.0" y2="505.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="555" x2="885.0" y2="565.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="555" x2="885.0" y2="625.0" stroke="#000" stroke-width="1"/>
+<line x1="987" y1="555" x2="885.0" y2="685.0" stroke="#000" stroke-width="1"/>
+<line x1="512.0" y1="100.0" x2="452.0" y2="100.0" stroke="#000" stroke-width="1" stroke-dasharray="5,3"/>
+<polyline points="462.0,95.0 452.0,100.0 462.0,105.0" fill="none" stroke="#000" stroke-width="1"/>
+<text x="482.0" y="94.0" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">«extend»</text>
+<line x1="512.0" y1="400.0" x2="452.0" y2="400.0" stroke="#000" stroke-width="1" stroke-dasharray="5,3"/>
+<polyline points="462.0,395.0 452.0,400.0 462.0,405.0" fill="none" stroke="#000" stroke-width="1"/>
+<text x="482.0" y="394.0" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">«extend»</text>
+<line x1="427.8" y1="323.8" x2="528.4" y2="299.7" stroke="#000" stroke-width="1" stroke-dasharray="5,3"/>
+<polyline points="519.8,306.9 528.4,299.7 517.5,297.2" fill="none" stroke="#000" stroke-width="1"/>
+<text x="478.1" y="305.8" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">«include»</text>
+<line x1="95" y1="472" x2="95" y2="353" stroke="#000" stroke-width="1"/>
+<polygon points="95,341 87,354 103,354" fill="#fff" stroke="#000" stroke-width="1"/>
+<line x1="1005" y1="522" x2="1005" y2="308" stroke="#000" stroke-width="1"/>
+<polygon points="1005,296 997,309 1013,309" fill="#fff" stroke="#000" stroke-width="1"/>
+<ellipse cx="360" cy="100" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="104.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Consultar cardápio</text>
+<ellipse cx="360" cy="160" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="164.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Montar carrinho</text>
+<ellipse cx="360" cy="220" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="224.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Criar conta</text>
+<ellipse cx="360" cy="340" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="344.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Realizar pedido</text>
+<ellipse cx="360" cy="400" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="404.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Acompanhar pedidos</text>
+<ellipse cx="360" cy="460" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="464.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Confirmar recebimento</text>
+<ellipse cx="360" cy="520" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="524.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Gerenciar dados da conta</text>
+<ellipse cx="360" cy="580" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="584.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Gerenciar endereços</text>
+<ellipse cx="360" cy="640" rx="92" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="360.0" y="644.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Sair da conta</text>
+<ellipse cx="590" cy="100" rx="78" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="590.0" y="97.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Buscar e filtrar</text>
+<text x="590.0" y="111.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">produtos</text>
+<ellipse cx="590" cy="285" rx="78" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="590.0" y="289.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Efetuar login</text>
+<ellipse cx="590" cy="400" rx="78" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="590.0" y="404.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Cancelar pedido</text>
+<ellipse cx="785" cy="110" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="114.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Listar pedidos recebidos</text>
+<ellipse cx="785" cy="170" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="174.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Atualizar status do pedido</text>
+<ellipse cx="785" cy="225" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="229.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Cancelar pedido com motivo</text>
+<ellipse cx="785" cy="350" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="347.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Consultar histórico</text>
+<text x="785.0" y="361.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">de pedidos</text>
+<ellipse cx="785" cy="445" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="449.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Gerenciar produtos</text>
+<ellipse cx="785" cy="505" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="509.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Controlar estoque</text>
+<ellipse cx="785" cy="565" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="569.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Gerenciar categorias</text>
+<ellipse cx="785" cy="625" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="629.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Gerenciar usuários</text>
+<ellipse cx="785" cy="685" rx="100" ry="24" fill="#fff" stroke="#000" stroke-width="1.2"/>
+<text x="785.0" y="689.0" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="middle" fill="#000">Visualizar indicadores</text>
+<circle cx="95" cy="250" r="10" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<line x1="95" y1="260" x2="95" y2="290" stroke="#000" stroke-width="1.5"/>
+<line x1="79" y1="270" x2="111" y2="270" stroke="#000" stroke-width="1.5"/>
+<line x1="95" y1="290" x2="83" y2="315" stroke="#000" stroke-width="1.5"/>
+<line x1="95" y1="290" x2="107" y2="315" stroke="#000" stroke-width="1.5"/>
+<text x="95.0" y="333.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000">Visitante</text>
+<circle cx="95" cy="485" r="10" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<line x1="95" y1="495" x2="95" y2="525" stroke="#000" stroke-width="1.5"/>
+<line x1="79" y1="505" x2="111" y2="505" stroke="#000" stroke-width="1.5"/>
+<line x1="95" y1="525" x2="83" y2="550" stroke="#000" stroke-width="1.5"/>
+<line x1="95" y1="525" x2="107" y2="550" stroke="#000" stroke-width="1.5"/>
+<text x="95.0" y="568.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000">Cliente</text>
+<circle cx="1005" cy="205" r="10" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<line x1="1005" y1="215" x2="1005" y2="245" stroke="#000" stroke-width="1.5"/>
+<line x1="989" y1="225" x2="1021" y2="225" stroke="#000" stroke-width="1.5"/>
+<line x1="1005" y1="245" x2="993" y2="270" stroke="#000" stroke-width="1.5"/>
+<line x1="1005" y1="245" x2="1017" y2="270" stroke="#000" stroke-width="1.5"/>
+<text x="1005.0" y="288.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000">Atendente</text>
+<circle cx="1005" cy="535" r="10" fill="#fff" stroke="#000" stroke-width="1.5"/>
+<line x1="1005" y1="545" x2="1005" y2="575" stroke="#000" stroke-width="1.5"/>
+<line x1="989" y1="555" x2="1021" y2="555" stroke="#000" stroke-width="1.5"/>
+<line x1="1005" y1="575" x2="993" y2="600" stroke="#000" stroke-width="1.5"/>
+<line x1="1005" y1="575" x2="1017" y2="600" stroke="#000" stroke-width="1.5"/>
+<text x="1005.0" y="618.0" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000">Administrador</text>
+</svg>

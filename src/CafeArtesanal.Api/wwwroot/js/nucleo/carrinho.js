@@ -20,9 +20,12 @@ export const carrinho = {
     const itens = ler();
     const existente = itens.find((i) => i.produtoId === produto.id);
     const limite = Math.min(MAXIMO_POR_ITEM, produto.estoque ?? MAXIMO_POR_ITEM);
+    const atual = existente?.quantidade ?? 0;
+    if (atual >= limite) return 0;
 
+    const novaQuantidade = Math.min(limite, atual + quantidade);
     if (existente) {
-      existente.quantidade = Math.min(limite, existente.quantidade + quantidade);
+      existente.quantidade = novaQuantidade;
     } else {
       itens.push({
         produtoId: produto.id,
@@ -30,10 +33,11 @@ export const carrinho = {
         preco: produto.preco,
         imagemUrl: produto.imagemUrl,
         estoque: produto.estoque,
-        quantidade: Math.min(limite, quantidade)
+        quantidade: novaQuantidade
       });
     }
     gravar(itens);
+    return novaQuantidade;
   },
 
   definirQuantidade(produtoId, quantidade) {

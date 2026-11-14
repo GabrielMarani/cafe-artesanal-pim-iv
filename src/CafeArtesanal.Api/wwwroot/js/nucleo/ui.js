@@ -77,7 +77,7 @@ const ICONES = {
   acessibilidade: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><path d="M7 10l5 1 5-1"/><path d="M12 11v4l-2.5 4"/><path d="M12 15l2.5 4"/>',
   atualizar: '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
   baixar: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
-  estrela: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  graos: '<g transform="rotate(-29 6.8 10)"><ellipse cx="6.8" cy="10" rx="4" ry="6.4"/><path d="M7 4c-3 3 2 6-.4 12"/></g><g transform="rotate(34 17.2 14.8)"><ellipse cx="17.2" cy="14.8" rx="4" ry="6.4"/><path d="M17.3 8.7c-3 3 2 6-.3 12.1"/></g>',
   coracao: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
   texto: '<polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/>',
   teclado: '<rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="7" y1="16" x2="17" y2="16"/>',
@@ -94,42 +94,87 @@ export function icone(nome, rotulo) {
 
 const ICONE_AVISO = { sucesso: 'checkCirculo', erro: 'alerta', info: 'info' };
 
-function mostrarAviso(tipo, mensagem, duracao = 5000) {
+function caixaAvisos() {
   let caixa = document.getElementById('avisos');
   if (!caixa) {
     caixa = document.createElement('div');
     caixa.id = 'avisos';
     caixa.className = 'avisos';
-    caixa.setAttribute('aria-live', 'polite');
     document.body.append(caixa);
   }
+  return caixa;
+}
+
+function mostrarAviso(tipo, mensagem, duracao = 5000) {
   const el = document.createElement('div');
   el.className = `aviso aviso-${tipo}`;
   renderizar(el, html`${icone(ICONE_AVISO[tipo])}<p>${mensagem}</p>
     <button type="button" aria-label="Fechar aviso">${icone('fechar')}</button>`);
   el.querySelector('button').addEventListener('click', () => el.remove());
-  caixa.append(el);
+  caixaAvisos().append(el);
+  anunciar(mensagem);
   setTimeout(() => el.remove(), duracao);
 }
 
 export const aviso = {
   sucesso: (m) => mostrarAviso('sucesso', m),
   erro: (m) => mostrarAviso('erro', m, 7000),
-  info: (m) => mostrarAviso('info', m)
+  info: (m) => mostrarAviso('info', m),
+  carrinho(produto, origem, quantidade) {
+    const caixa = caixaAvisos();
+    let el = caixa.querySelector('.aviso-carrinho');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'aviso aviso-carrinho';
+      renderizar(el, html`<span class="aviso-carrinho-icone" aria-hidden="true">${icone('check')}${icone('info')}</span>
+        <div class="aviso-carrinho-conteudo">
+          <p data-resultado-carrinho></p>
+          <p><strong data-produto-adicionado></strong></p>
+          <a href="carrinho.html">Ver carrinho ${icone('setaDireita')}</a>
+        </div>
+        <button type="button" aria-label="Fechar aviso do carrinho">${icone('fechar')}</button>`);
+      caixa.append(el);
+    }
+
+    const adicionado = quantidade > 0;
+    const unidades = quantidade === 1 ? '1 unidade' : `${quantidade} unidades`;
+    el.classList.toggle('aviso-carrinho-limite', !adicionado);
+    el.querySelector('[data-resultado-carrinho]').textContent = adicionado
+      ? 'Adicionado ao carrinho'
+      : 'Limite de unidades atingido';
+    el.querySelector('[data-produto-adicionado]').textContent = adicionado
+      ? `${produto} · ${unidades}`
+      : produto;
+    el.querySelector('button').onclick = () => {
+      if (el.contains(document.activeElement)) {
+        let retorno = origem.isConnected ? origem : document.querySelector('header.topo a[href="carrinho.html"]');
+        if (!retorno?.getClientRects().length) retorno = document.querySelector('header.topo .botao-menu');
+        retorno?.focus();
+      }
+      el.remove();
+    };
+    anunciar(adicionado
+      ? `${produto} adicionado ao carrinho. ${unidades} no carrinho.`
+      : `Limite de unidades atingido para ${produto}.`);
+  }
 };
 
 /** Fala um texto para leitores de tela sem mostrar nada na tela. */
+let proximoAnuncio;
 export function anunciar(texto) {
   let regiao = document.getElementById('anunciador');
   if (!regiao) {
     regiao = document.createElement('div');
     regiao.id = 'anunciador';
     regiao.className = 'sr-only';
+    regiao.setAttribute('role', 'status');
     regiao.setAttribute('aria-live', 'polite');
+    regiao.setAttribute('aria-atomic', 'true');
     document.body.append(regiao);
   }
   regiao.textContent = '';
-  setTimeout(() => { regiao.textContent = texto; }, 50);
+  clearTimeout(proximoAnuncio);
+  proximoAnuncio = setTimeout(() => { regiao.textContent = texto; }, 50);
 }
 
 // ------------------------------------------------------------------ Diálogos (elemento <dialog> nativo: foco preso e ESC)
