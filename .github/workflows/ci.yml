@@ -42,11 +42,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y mariadb-client
+      # O cliente novo do MariaDB exige SSL por padrão; o banco descartável do CI não usa SSL.
       - name: Executa o script completo do banco
-        run: mariadb -h 127.0.0.1 -uroot -pci < database/bd_cafe_artesanal.sql
+        run: mariadb --skip-ssl -h 127.0.0.1 -uroot -pci < database/bd_cafe_artesanal.sql
       - name: Verifica procedures, triggers e views
         run: |
-          mariadb -h 127.0.0.1 -uroot -pci bd_cafe_artesanal -e "
+          mariadb --skip-ssl -h 127.0.0.1 -uroot -pci bd_cafe_artesanal -e "
             CALL sp_dashboard_resumo(CURDATE() - INTERVAL 30 DAY, CURDATE());
             CALL sp_produtos_mais_vendidos(CURDATE() - INTERVAL 30 DAY, CURDATE(), 3);
             SELECT COUNT(*) AS triggers FROM information_schema.TRIGGERS WHERE TRIGGER_SCHEMA = 'bd_cafe_artesanal';
@@ -70,9 +71,11 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      # Versão fixa: a mesma usada no desenvolvimento, para uma versão nova do Flutter não quebrar o CI.
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.47.8
           cache: true
       - run: flutter pub get
       - run: flutter analyze
